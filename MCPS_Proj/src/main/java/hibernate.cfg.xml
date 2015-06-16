@@ -25,5 +25,6 @@
   <mapping class="com.dd.mcps.entities.McpsRevieweraccountSurvey"/>
   <mapping class="com.dd.mcps.entities.McpsSurvey"/>
   <mapping class="com.dd.mcps.entities.McpsSurveyquestion"/>
+  <mapping class="com.dd.mcps.entities.McpsRole"/>
  </session-factory>
 </hibernate-configuration>

@@ -1,6 +1,6 @@
 package com.dd.mcps.entities;
 
-// Generated Jun 15, 2015 5:48:45 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jun 16, 2015 2:25:50 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,9 +25,9 @@ import javax.persistence.UniqueConstraint;
 public class McpsAccount implements java.io.Serializable {
 
 	private Long id;
+	private McpsRole mcpsRole;
 	private String email;
 	private String pass;
-	private Byte accountType;
 	private String state;
 	private Set<McpsCampaignAccount> mcpsCampaignAccounts = new HashSet<McpsCampaignAccount>(
 			0);
@@ -41,14 +43,14 @@ public class McpsAccount implements java.io.Serializable {
 		this.pass = pass;
 	}
 
-	public McpsAccount(String email, String pass, Byte accountType,
+	public McpsAccount(McpsRole mcpsRole, String email, String pass,
 			String state, Set<McpsCampaignAccount> mcpsCampaignAccounts,
 			McpsPartneraccount mcpsPartneraccount,
 			Set<McpsCampaign> mcpsCampaigns,
 			McpsRevieweraccount mcpsRevieweraccount) {
+		this.mcpsRole = mcpsRole;
 		this.email = email;
 		this.pass = pass;
-		this.accountType = accountType;
 		this.state = state;
 		this.mcpsCampaignAccounts = mcpsCampaignAccounts;
 		this.mcpsPartneraccount = mcpsPartneraccount;
@@ -67,6 +69,16 @@ public class McpsAccount implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "RoleType")
+	public McpsRole getMcpsRole() {
+		return this.mcpsRole;
+	}
+
+	public void setMcpsRole(McpsRole mcpsRole) {
+		this.mcpsRole = mcpsRole;
+	}
+
 	@Column(name = "Email", unique = true, nullable = false)
 	public String getEmail() {
 		return this.email;
@@ -83,15 +95,6 @@ public class McpsAccount implements java.io.Serializable {
 
 	public void setPass(String pass) {
 		this.pass = pass;
-	}
-
-	@Column(name = "AccountType")
-	public Byte getAccountType() {
-		return this.accountType;
-	}
-
-	public void setAccountType(Byte accountType) {
-		this.accountType = accountType;
 	}
 
 	@Column(name = "State")

@@ -1,6 +1,6 @@
 package com.dd.mcps.entities;
 
-// Generated Jun 15, 2015 5:48:45 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jun 16, 2015 2:25:50 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
