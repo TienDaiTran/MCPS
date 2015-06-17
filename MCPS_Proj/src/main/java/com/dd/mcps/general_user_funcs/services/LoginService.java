@@ -14,6 +14,14 @@ public class LoginService {
 
 	private AccountStorage accountStorage;
 	
+	public AccountStorage getAccountStorage() {
+		return accountStorage;
+	}
+
+	public void setAccountStorage(AccountStorage accountStorage) {
+		this.accountStorage = accountStorage;
+	}
+	
 	/**
 	 * Check that account is exist or not
 	 * @param email
@@ -21,7 +29,7 @@ public class LoginService {
 	 * @return true if exist and false for vice vesa
 	 */
 	public Boolean IsAccountExist(String email, String password) {
-		List<McpsAccount> accounts = accountStorage.isAccountExist(email, password);
+		List<McpsAccount> accounts = getAccountStorage().accountExist(email, password);
 		return (accounts.size() == 1);
 	}
 	

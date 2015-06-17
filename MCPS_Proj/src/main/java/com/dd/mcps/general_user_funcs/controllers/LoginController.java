@@ -12,6 +12,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dd.mcps.admin_funcs.services.ManageAccountService;
 import com.dd.mcps.general_user_funcs.services.LoginService;
 
 /**
@@ -37,7 +40,8 @@ public class LoginController {
 			@RequestParam(value="email", required=false) String email,
 			@RequestParam(value="password", required=false) String password) {
 		//logger.info("Welcome home! The client locale is {}.", locale);
-		LoginService service = new LoginService();
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		LoginService service = context.getBean("loginService", LoginService.class);
 		Boolean accountExist = service.IsAccountExist(email, password);
 		if (accountExist) {
 			return "Exist";

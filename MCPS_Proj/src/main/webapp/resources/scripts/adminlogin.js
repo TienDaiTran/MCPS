@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-    $('input').iCheck({
+	$('input').iCheck({
         checkboxClass: 'icheckbox_square-blue',
         radioClass: 'iradio_square-blue',
         increaseArea: '20%' // optional
@@ -32,11 +32,11 @@ $(document).ready(function() {
 		$.ajax({
 			type : "POST",
 			url : "./adminlogin",
-			data : "email=" + email.val() + "&password=" + password.val(),
+			data : "email=" + email.val() + "&pass=" + password.val(),
 			datatype : "text",
 			success : function(msg) {
 				if (msg == "Exist") {
-					window.location.assign("./home");
+					window.location.assign("./dashboard");
 				} else {
 					$("#message").html(msg);
 				}

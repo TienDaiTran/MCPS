@@ -5,7 +5,7 @@
  
  	<!-- database  -->
 	<!-- Json mapper -->
-	<import resource="restmapping/Rest-Servlet.xml" />
+
 	<!-- beans -->
 	<import resource="beansmapping/Spring-MCPS-beans.xml" />
  
