@@ -1,6 +1,6 @@
 package com.dd.mcps.entities;
 
-// Generated Jun 16, 2015 2:25:50 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jun 18, 2015 6:31:16 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "mcps_partneraccount", catalog = "mcps")
 public class McpsPartneraccount implements java.io.Serializable {
 
-	private Long id;
+	private long id;
 	private McpsAccount mcpsAccount;
 	private Long accountId;
 	private String partnerName;
@@ -59,11 +59,11 @@ public class McpsPartneraccount implements java.io.Serializable {
 	@Id
 	@GeneratedValue(generator = "generator")
 	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -1,0 +1,11 @@
+a {
+	cursor: pointer;
+}
+
+label.has-error {
+	color: #DD4B39;	
+}
+
+label.has-success {
+	color: #00A65A;	
+}

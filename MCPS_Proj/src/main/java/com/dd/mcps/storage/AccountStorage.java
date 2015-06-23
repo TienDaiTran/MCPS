@@ -9,10 +9,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.dd.mcps.entities.McpsAccount;
+import com.dd.mcps.entities.McpsGender;
+import com.dd.mcps.entities.McpsOccupation;
 import com.dd.mcps.entities.McpsRole;
 import com.dd.mcps.util.HibernateUtil;
 
-public class AccountStorage {
+public class AccountStorage implements IAccountStorage{
 	
 	/**
 	 * save new account
@@ -35,7 +37,7 @@ public class AccountStorage {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.save(updatedAccount);
+		session.merge(updatedAccount);
 		tx.commit();
 		session.close();
 	}
@@ -45,11 +47,14 @@ public class AccountStorage {
 	 * @param accountID
 	 * @return
 	 */
-	public McpsAccount getAccount(int accountID) {
+	public McpsAccount getAccount(long accountID) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		McpsAccount found = (McpsAccount)session.get(McpsAccount.class, accountID);
+		Hibernate.initialize(found.getMcpsRole());
+		Hibernate.initialize(found.getMcpsPartneraccount());
+		Hibernate.initialize(found.getMcpsRevieweraccount());
 		tx.commit();
 		session.close();
 		return found;
@@ -78,6 +83,27 @@ public class AccountStorage {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		Query query = session.createQuery("from McpsAccount");
+		List<McpsAccount> accounts = query.list();
+		for (McpsAccount acc : accounts) {
+			Hibernate.initialize(acc.getMcpsRole());
+		}
+		tx.commit();
+		session.close();
+		return accounts;
+	}
+	
+	/**
+	 * retrieve account is exist with specific email
+	 * @param email
+	 * @param password
+	 * @return list account
+	 */
+	public List<McpsAccount> accountExist(String email) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from McpsAccount where email = :email");
+		query.setParameter("email", email);
 		List<McpsAccount> accounts = query.list();
 		for (McpsAccount acc : accounts) {
 			Hibernate.initialize(acc.getMcpsRole());
@@ -125,8 +151,38 @@ public class AccountStorage {
 	}
 	
 	/**
+	 * retrieve all gender type in system
+	 * @return list of roles
+	 */
+	public List<McpsGender> getAllGenders() {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from McpsGender");
+		List<McpsGender> genders = query.list();
+		tx.commit();
+		session.close();
+		return genders;
+	}
+	
+	/**
+	 * retrieve all occupation type in system
+	 * @return list of occupations
+	 */
+	public List<McpsOccupation> getAllOccupation() {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from McpsOccupation");
+		List<McpsOccupation> occupations = query.list();
+		tx.commit();
+		session.close();
+		return occupations;
+	}
+	
+	/**
 	 * search account with specific criteria
-	 * @param criteria
+	 * @param criteria with account id, email and roleid
 	 * @return list account found
 	 */
 	public List<McpsAccount> search(McpsAccount criteria) {
@@ -153,6 +209,11 @@ public class AccountStorage {
 		return accounts;
 	}
 	
+	/**
+	 * Block or unblock account
+	 * @param id
+	 * @param isBlock
+	 */
 	public void block(Long id, boolean isBlock) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();

@@ -26,5 +26,6 @@
   <mapping class="com.dd.mcps.entities.McpsSurvey"/>
   <mapping class="com.dd.mcps.entities.McpsSurveyquestion"/>
   <mapping class="com.dd.mcps.entities.McpsRole"/>
+  <mapping class="com.dd.mcps.entities.McpsGender"/>
  </session-factory>
 </hibernate-configuration>

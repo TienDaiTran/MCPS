@@ -36,7 +36,7 @@ $(document).ready(function() {
 			datatype : "text",
 			success : function(msg) {
 				if (msg == "Exist") {
-					window.location.assign("./dashboard");
+					window.location.assign("./admin/account");
 				} else {
 					$("#message").html(msg);
 				}

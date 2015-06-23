@@ -1,6 +1,6 @@
 package com.dd.mcps.entities;
 
-// Generated Jun 16, 2015 2:25:50 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jun 18, 2015 6:31:16 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -30,13 +30,13 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "mcps_revieweraccount", catalog = "mcps")
 public class McpsRevieweraccount implements java.io.Serializable {
 
-	private Long id;
+	private long id;
 	private McpsAccount mcpsAccount;
 	private McpsOccupation mcpsOccupation;
+	private McpsGender mcpsGender;
 	private Long accountId;
 	private String firstName;
 	private String lastName;
-	private boolean gender;
 	private Date birthday;
 	private String address;
 	private String tel;
@@ -47,29 +47,29 @@ public class McpsRevieweraccount implements java.io.Serializable {
 	public McpsRevieweraccount() {
 	}
 
-	public McpsRevieweraccount(McpsAccount mcpsAccount, String firstName,
-			String lastName, boolean gender, Date birthday, String address,
+	public McpsRevieweraccount(McpsAccount mcpsAccount, McpsGender mcpsGender,
+			String firstName, String lastName, Date birthday, String address,
 			String tel) {
 		this.mcpsAccount = mcpsAccount;
+		this.mcpsGender = mcpsGender;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.gender = gender;
 		this.birthday = birthday;
 		this.address = address;
 		this.tel = tel;
 	}
 
 	public McpsRevieweraccount(McpsAccount mcpsAccount,
-			McpsOccupation mcpsOccupation, Long accountId, String firstName,
-			String lastName, boolean gender, Date birthday, String address,
-			String tel, Set<McpsInterest> mcpsInterests,
+			McpsOccupation mcpsOccupation, McpsGender mcpsGender,
+			Long accountId, String firstName, String lastName, Date birthday,
+			String address, String tel, Set<McpsInterest> mcpsInterests,
 			Set<McpsRevieweraccountSurvey> mcpsRevieweraccountSurveys) {
 		this.mcpsAccount = mcpsAccount;
 		this.mcpsOccupation = mcpsOccupation;
+		this.mcpsGender = mcpsGender;
 		this.accountId = accountId;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.gender = gender;
 		this.birthday = birthday;
 		this.address = address;
 		this.tel = tel;
@@ -81,11 +81,11 @@ public class McpsRevieweraccount implements java.io.Serializable {
 	@Id
 	@GeneratedValue(generator = "generator")
 	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -107,6 +107,16 @@ public class McpsRevieweraccount implements java.io.Serializable {
 
 	public void setMcpsOccupation(McpsOccupation mcpsOccupation) {
 		this.mcpsOccupation = mcpsOccupation;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Gender", nullable = false)
+	public McpsGender getMcpsGender() {
+		return this.mcpsGender;
+	}
+
+	public void setMcpsGender(McpsGender mcpsGender) {
+		this.mcpsGender = mcpsGender;
 	}
 
 	@Column(name = "AccountID")
@@ -134,15 +144,6 @@ public class McpsRevieweraccount implements java.io.Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	@Column(name = "Gender", nullable = false)
-	public boolean isGender() {
-		return this.gender;
-	}
-
-	public void setGender(boolean gender) {
-		this.gender = gender;
 	}
 
 	@Temporal(TemporalType.DATE)

@@ -1,12 +1,16 @@
 package com.dd.mcps.entities;
 
-// Generated Jun 16, 2015 2:25:50 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jun 18, 2015 6:31:16 PM by Hibernate Tools 3.4.0.CR1
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -38,6 +42,7 @@ public class McpsOccupation implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "ID", unique = true, nullable = false)
 	public byte getId() {
 		return this.id;

@@ -2,11 +2,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF8"/>
+  <meta charset="UTF-8"/>
   <title>Insert title here</title>
 </head>
 <body>
-  <section th:fragment="content" class="content">
+<div th:fragment="content">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Quản lý tài khoản
+            <small></small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+            <li class="active">Quản lý tài khoản</li>
+          </ol>
+        </section>
+        
+        <!-- Main content -->
+  <section class="content">
   <div id="toast" style="display:none">
 <img src="img/refresh.png"></img> 
 </div>
@@ -37,8 +51,8 @@ xmlns:th="http://www.thymeleaf.org">
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation" th:each="role : ${roles}"><a role="menuitem" tabindex="-1" href="#" th:name="${role.id}" th:text="${role.roleName}">Action</a></li>
-                    <li role="presentation"><a class="selected" role="menuitem" tabindex="-1" name="0">All</a></li>
+                  	<li role="presentation"><a role="menuitem" tabindex="-1" name="0">All</a></li>
+                    <li role="presentation" th:each="role : ${roles}"><a role="menuitem" tabindex="-1" th:name="${role.id}" th:text="${role.roleName}">Action</a></li>
                     <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1" >Another action</a></li>
                     <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1" >Something else here</a></li>
                     <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1" >Separated link</a></li>
@@ -61,7 +75,7 @@ xmlns:th="http://www.thymeleaf.org">
             <h3 class="box-title">Data Table With Full Features</h3>
           </div><!-- /.box-header -->
           <div class="box-body">
-          	<div><a>Thêm tài khoản</a></div>
+          	<div><a href="account/create">Thêm tài khoản</a></div>
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -80,7 +94,7 @@ xmlns:th="http://www.thymeleaf.org">
                   <td th:text="${account.email}"></td>
                   <td th:text="${account.mcpsRole.roleName}"></td>
                   <td th:text="${account.state}"></td>
-                  <td>Edit</td>
+                  <td><a class="edit-anchor" th:href="@{/admin/account/edit(id=${account.id})}" >Edit</a></td>
                   <td th:if="${account.state} == active"><a class="block-anchor">Block</a></td>
                   <td th:if="${account.state} == block"><a class="unblock-anchor">Unblock</a></td>
                   <td><a class="delete-anchor">Delete</a></td>
@@ -106,5 +120,7 @@ xmlns:th="http://www.thymeleaf.org">
     </div>
     <!-- Your Page Content Here -->
   </section><!-- /.content -->
+  <script th:src="@{/resources/scripts/admin/adminaccountmanagement.js}" src="/resources/scripts/admin/adminaccountmanagement.js" type="text/javascript"></script>
+  </div>
 </body>
 </html>
