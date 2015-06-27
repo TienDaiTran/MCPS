@@ -84,7 +84,7 @@ xmlns:th="http://www.thymeleaf.org">
                     <div class="form-group">
                       <label for="inputFoundingDay" class="col-sm-2 control-label">Ngày thành lập</label>
                       <div class="col-sm-4">
-                      <div class='input-group date datepicker' id='datetimepicker8'>
+                      <div class='input-group date datepicker' id='datetimepickerFoundingDay'>
                           <input type='text' id="inputFoundingDay" class="form-control mydatetime" th:value="*{#dates.format(mcpsPartneraccount.foundingDate,'dd/MM/yyyy')}" th:name="mcpsPartneraccount.foundingDate" readonly="readonly"/>
                           <span class="input-group-addon">
                             <span class="fa fa-calendar">
@@ -133,7 +133,7 @@ xmlns:th="http://www.thymeleaf.org">
                   <div class="form-group">
                     <label for="inputBirthDay" class="col-sm-2 control-label">Ngày sinh*</label>
                     <div class="col-sm-4">
-                      <div class='input-group date datepicker'>
+                      <div class='input-group date datepicker' id="datetimepickerBirthday">
                         <input type='text' class="form-control mydatetime" id='birthdayDatetimepicker' th:value="*{#dates.format(mcpsRevieweraccount.birthday,'dd/MM/yyyy')}" th:name="mcpsRevieweraccount.birthday" required="required" readonly="readonly"/>
                         <span class="input-group-addon">
                           <span class="fa fa-calendar">

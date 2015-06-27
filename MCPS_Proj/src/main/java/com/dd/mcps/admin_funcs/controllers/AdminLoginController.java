@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dd.mcps.HomeController;
-import com.dd.mcps.admin_funcs.services.ManageAccountService;
 import com.dd.mcps.entities.McpsAccount;
 import com.dd.mcps.general_user_funcs.services.LoginService;
+import com.dd.mcps.services.ManageAccountService;
 import com.dd.mcps.util.HibernateUtil;
 
 @Controller

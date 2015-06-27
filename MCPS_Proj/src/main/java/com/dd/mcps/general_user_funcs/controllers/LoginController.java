@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dd.mcps.admin_funcs.services.ManageAccountService;
 import com.dd.mcps.general_user_funcs.services.LoginService;
+import com.dd.mcps.services.ManageAccountService;
 
 /**
  * Handles requests for the application home page.

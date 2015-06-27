@@ -1,4 +1,4 @@
-package com.dd.mcps.admin_funcs.services;
+package com.dd.mcps.services;
 
 import java.util.List;
 
@@ -6,10 +6,9 @@ import com.dd.mcps.entities.McpsAccount;
 import com.dd.mcps.entities.McpsGender;
 import com.dd.mcps.entities.McpsOccupation;
 import com.dd.mcps.entities.McpsRole;
-import com.dd.mcps.storage.AccountStorage;
 import com.dd.mcps.storage.IAccountStorage;
 
-public class ManageAccountService {
+public class ManageCampaignService {
 	
 	private IAccountStorage accountStorage;
 	
@@ -26,7 +25,7 @@ public class ManageAccountService {
 	}
 	
 	/**
-	 * kiểm tra tài khoản có tồn tại hay không
+	 * check account exist or not
 	 * @param email
 	 * @return true or false
 	 */
@@ -39,7 +38,7 @@ public class ManageAccountService {
 	}
 	
 	/**
-	 * kiểm tra tài khoản có tồn tại hay không
+	 * check account exist or not
 	 * @param email
 	 * @param password
 	 * @param role
@@ -57,38 +56,77 @@ public class ManageAccountService {
 		return false;
 	}
 	
+	/**
+	 * Get all accounts in system
+	 * @return
+	 */
 	public List<McpsAccount> getAllAccounts() {
 		return getAccountStorage().getAll();
 	}
 	
+	/**
+	 * Get all roles of account in system
+	 * @return
+	 */
 	public List<McpsRole> getAllRoles() {
 		return getAccountStorage().getAllRoles();
 	}
 	
+	/**
+	 * Get all kind of genders in system
+	 * @return
+	 */
 	public List<McpsGender> getGenders() {
 		return getAccountStorage().getAllGenders();
 	}
 	
+	/**
+	 * Get all kind of jobs in system
+	 * @return
+	 */
 	public List<McpsOccupation> getOccupations() {
 		return getAccountStorage().getAllOccupation();
 	}
 	
+	/**
+	 * Search an account by criteria (AccountID, email and role)
+	 * @param criteria
+	 * @return
+	 */
 	public List<McpsAccount> searchAccount(McpsAccount criteria) {
 		return getAccountStorage().search(criteria);
 	}
 	
+	/**
+	 * Create new account
+	 * @param newAccount
+	 */
 	public void createAccount(McpsAccount newAccount) {
 		getAccountStorage().saveAccount(newAccount);
 	}
 	
+	/**
+	 * Block or unblock account
+	 * @param id
+	 * @param isBlock true if block and vice versa
+	 */
 	public void block(Long id, boolean isBlock) {
 		getAccountStorage().block(id, isBlock);
 	}
 	
+	/**
+	 * Delete an account by id
+	 * @param id
+	 */
 	public void delete(Long id) {
 		getAccountStorage().deleteAccount(id);
 	}
 	
+	/**
+	 * Update account info
+	 * @param newInfo
+	 * @return true or fasle
+	 */
 	public boolean updateAccountInfo(McpsAccount newInfo) {
 		McpsAccount oldInfo = getAccount(newInfo.getId());
 		boolean completed = false;

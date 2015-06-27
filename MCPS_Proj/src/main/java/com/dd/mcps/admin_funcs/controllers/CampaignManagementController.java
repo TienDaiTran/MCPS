@@ -39,25 +39,25 @@ import com.dd.mcps.util.HibernateUtil;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @Controller
-public class AccountManagementController {
+public class CampaignManagementController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
 	private ManageAccountService manageAccountService;
 	
-	@RequestMapping(value = "/admin/account", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/campaign", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Redirect to admin dashboard page");
 		
-		model.addAttribute("content", "admin/partition/account-management");
+		model.addAttribute("content", "admin/partition/campaign-management");
 		model.addAttribute("roles", manageAccountService.getAllRoles());
 		model.addAttribute("accounts", manageAccountService.getAllAccounts());
 		
 		return "admin/admin-home-page";
 	}
 	
-	@RequestMapping(value = "/admin/account", method = RequestMethod.POST, 
+	@RequestMapping(value = "/admin/campaign", method = RequestMethod.POST, 
 			params = {"id", "email", "role"})
 	public String search(@RequestParam(value = "id") String id, 
 			@RequestParam(value = "email") String email, 
@@ -85,46 +85,14 @@ public class AccountManagementController {
 		criteria.setMcpsRole(role);
 		List<McpsAccount> accounts = manageAccountService.searchAccount(criteria);
 		
-		model.addAttribute("content", "admin/partition/account-management");
+		model.addAttribute("content", "admin/partition/campaign-management");
 		model.addAttribute("roles", manageAccountService.getAllRoles());
 		model.addAttribute("accounts", accounts);
-		return "admin/partition/account-management :: listAccount";
+		return "admin/partition/campaign-management :: listCampaign";
 		//return "admin/admin-home-page";
 	}
 	
-	@RequestMapping(value = "/admin/account", method = RequestMethod.POST, 
-			params = {"id", "block"})
-	public @ResponseBody String blockAccount(@RequestParam(value = "id") String idString, @RequestParam(value = "block") String block, Model model) {
-		boolean isBlock = false;
-		if ("true".equals(block)) {
-			isBlock = true;
-		}
-		String result = "";
-		try {
-			Long id = Long.parseLong(idString);
-			manageAccountService.block(id, isBlock);
-			result = "success";
-		} catch (NumberFormatException e) {
-			result = "unsuccess";
-		}
-		return result;
-	}
-	
-	@RequestMapping(value = "/admin/account/delete", method = RequestMethod.POST, 
-			params = {"id"})
-	public @ResponseBody String deleteAccount(@RequestParam(value = "id") String idString, Model model) {
-		String result = "";
-		try {
-			Long id = Long.parseLong(idString);
-			manageAccountService.delete(id);
-			result = "success";
-		} catch (NumberFormatException e) {
-			result = "unsuccess";
-		}
-		return result;
-	}
-	
-	@RequestMapping(value = "/admin/account/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/campaign/create", method = RequestMethod.GET)
 	public String createAccountPage(Model model) {
 		
 		McpsRole role = new McpsRole();
@@ -136,7 +104,7 @@ public class AccountManagementController {
 		newAccount.setMcpsRole(role);
 		newAccount.setMcpsPartneraccount(partnerAccountInfo);
 		newAccount.setMcpsRevieweraccount(revieweraccountInfo);
-		model.addAttribute("content", "admin/partition/add-new-account");
+		model.addAttribute("content", "admin/partition/add-new-campaign");
 		model.addAttribute("roles", manageAccountService.getAllRoles());
 		model.addAttribute("genders", manageAccountService.getGenders());
 		model.addAttribute("occupations", manageAccountService.getOccupations());
@@ -145,7 +113,7 @@ public class AccountManagementController {
 		return "admin/admin-home-page";
 	}
 	
-	@RequestMapping(value = "/admin/account/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/campaign/create", method = RequestMethod.POST)
 	public @ResponseBody String createAccount(Model model, @ModelAttribute("newAccount") McpsAccount newAccount, BindingResult result) {
 		
 		String success = "unsuccess";
@@ -164,7 +132,7 @@ public class AccountManagementController {
 		return success;
 	}
 	
-	@RequestMapping(value = "/admin/account/edit", method = RequestMethod.GET,
+	@RequestMapping(value = "/admin/campaign/edit", method = RequestMethod.GET,
 			params = {"id"})
 	public String editAccountPage(@RequestParam(value = "id") String idString, Model model) {
 		
@@ -186,7 +154,7 @@ public class AccountManagementController {
 		return "admin/admin-home-page";
 	}
 	
-	@RequestMapping(value = "/admin/account/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/campaign/edit", method = RequestMethod.POST)
 	public @ResponseBody String editAccount(@ModelAttribute("editAccount") McpsAccount editAccount, Model model) {
 		
 		String success = "unsuccess";

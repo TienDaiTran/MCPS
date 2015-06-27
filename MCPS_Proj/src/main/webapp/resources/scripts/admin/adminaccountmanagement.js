@@ -1,4 +1,3 @@
-
 function showDetailInfoRegion(chosenRole) {
 	if ("Partner" == chosenRole) {
 		$("#detailInfoDiv").html($("#partnerInfo").html());
@@ -8,10 +7,14 @@ function showDetailInfoRegion(chosenRole) {
 		$("#detailInfoDiv").html("");
 	}
 	activeDatePicker();
+	setDatePickerEndDate($('#datetimepickerFoundingDay'));
+	setDatePickerEndDate($('#datetimepickerBirthday'));
 }
 
-
 $(document).ready(function(){
+	
+	setDatePickerEndDate($('#datetimepickerFoundingDay'));
+	setDatePickerEndDate($('#datetimepickerBirthday'));
 	
 	///////////////////CREATE ACCOUNT////////////////////////
 	

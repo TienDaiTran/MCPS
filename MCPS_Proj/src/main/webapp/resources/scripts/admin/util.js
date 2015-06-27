@@ -1,3 +1,18 @@
+function setDatePickerEndDate(datepicker) {
+	if (datepicker != null) {
+		datepicker.datepicker("endDate", new Date());
+		var validDefaultDate = new Date();
+		validDefaultDate.setDate(validDefaultDate.getDate() - 1);
+		datepicker.datepicker("setDate", validDefaultDate);
+	}
+}
+
+function setDatePickerStartDate(datepicker) {
+	if (datepicker != null) {
+		datepicker.datepicker("startDate", new Date());
+		datepicker.datepicker("setDate", new Date());
+	}
+}
 
 function show(target) {
 	target.removeClass("hidden");
@@ -16,7 +31,10 @@ function activeDatePicker() {
             up: "fa fa-arrow-up",
             down: "fa fa-arrow-down"
         },
-        format: "dd/mm/yyyy"
+        format: "dd/mm/yyyy",
+        todayBtn: "linked",
+        language: "vi",
+        todayHighlight: true
     });
 }
 

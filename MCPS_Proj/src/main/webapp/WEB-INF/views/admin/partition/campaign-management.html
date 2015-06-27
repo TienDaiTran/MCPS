@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Insert title here</title>
+</head>
+<body>
+<div th:fragment="content">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Quản lý tài khoản
+            <small></small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+            <li class="active">Quản lý tài khoản</li>
+          </ol>
+        </section>
+        
+        <!-- Main content -->
+  <section class="content">
+  <div id="toast" style="display:none">
+<img src="img/refresh.png"></img> 
+</div>
+    <div class="row">
+      <div class="col-xs-12">
+        <!-- Search form begin -->
+        <div class="box">
+          <div class="box-body">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="inputID" class="col-sm-1 control-label">Mã chiến dịch</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" id="inputID" name="id" placeholder="ID"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail" class="col-sm-1 control-label">Tên chiến dịch</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" id="inputEmail" name="name" placeholder="Tên chiến dịch"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-1 control-label">Danh mục</label>
+                <input id="inputRole" type="hidden" name="category" value="0"/>
+                <div class="dropdown col-sm-4">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                    Dropdown
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                  	<li role="presentation"><a role="menuitem" tabindex="-1" name="0">All</a></li>
+                    <li role="presentation" th:each="role : ${roles}"><a role="menuitem" tabindex="-1" th:name="${role.id}" th:text="${role.roleName}">Action</a></li>
+                    <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1" >Another action</a></li>
+                    <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1" >Something else here</a></li>
+                    <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1" >Separated link</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-2">
+                  <button id="btnSearch" type="button" class="btn btn-default"><i class="fa fa-search"></i> Tìm kiếm</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Search form end -->
+        <!-- List Account begin -->
+        <div id="listAccountDiv">
+        <div class="box" th:fragment="listCampaign">
+          <div class="box-header">
+            <h3 class="box-title">Data Table With Full Features</h3>
+          </div><!-- /.box-header -->
+          <div class="box-body">
+          	<div><a href="campaign/create">Thêm tài khoản</a></div>
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Account ID</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>State</th>
+                  <th>Edit</th>
+                  <th>Block</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="account : ${accounts}">
+                  <td class="id-account" th:text="${account.id}"></td>
+                  <td th:text="${account.email}"></td>
+                  <td th:text="${account.mcpsRole.roleName}"></td>
+                  <td th:text="${account.state}"></td>
+                  <td><a class="edit-anchor" th:href="@{/admin/account/edit(id=${account.id})}" >Edit</a></td>
+                  <td th:if="${account.state} == active"><a class="block-anchor">Block</a></td>
+                  <td th:if="${account.state} == block"><a class="unblock-anchor">Unblock</a></td>
+                  <td><a class="delete-anchor">Delete</a></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Account ID</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>State</th>
+                  <th>Edit</th>
+                  <th>Block</th>
+                  <th>Delete</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div><!-- /.box-body -->
+        </div><!-- /.box -->
+        </div>
+        <!-- List Account end -->
+      </div>
+    </div>
+    <!-- Your Page Content Here -->
+  </section><!-- /.content -->
+  <script th:src="@{/resources/scripts/admin/adminaccountmanagement.js}" src="/resources/scripts/admin/adminaccountmanagement.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

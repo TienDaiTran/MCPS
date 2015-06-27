@@ -1,5 +1,8 @@
 $(document).ready(function(){
 	
+    setDatePickerEndDate($('#datetimepickerFoundingDay'));
+    setDatePickerEndDate( $('#datetimepickerBirthday'));
+	
 	///////////////////CREATE ACCOUNT////////////////////////
 	
 	$("#inputRetypePassword").change(function(){

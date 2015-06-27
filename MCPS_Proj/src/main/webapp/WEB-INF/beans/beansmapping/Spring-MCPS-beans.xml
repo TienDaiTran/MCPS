@@ -5,7 +5,7 @@
  
 	<bean id="accountStorage" class="com.dd.mcps.storage.AccountStorage"></bean>
 	
-	<bean id="manageAccountService" class="com.dd.mcps.admin_funcs.services.ManageAccountService">
+	<bean id="manageAccountService" class="com.dd.mcps.services.ManageAccountService">
 		<property name="accountStorage" ref="accountStorage"></property>
 	</bean>
  
