@@ -15,6 +15,12 @@ $(document).ready(function(){
 	
 	setDatePickerEndDate($('#datetimepickerFoundingDay'), true);
 	setDatePickerEndDate($('#datetimepickerBirthday'), true);
+	if ($('#interestSelect').length) {
+		$('#interestSelect').multiselect({
+			maxHeight: 200,
+			includeSelectAllOption: true
+		});
+	}
 	
 	///////////////////CREATE ACCOUNT////////////////////////
 	

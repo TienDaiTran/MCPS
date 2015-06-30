@@ -204,6 +204,18 @@ xmlns:th="http://www.thymeleaf.org">
                       <input type="tel" class="form-control" id="inputTel" placeholder="0906924379" th:field="*{mcpsRevieweraccount.tel}" required="required"/>
                     </div>
                   </div>
+                  <div class="form-group">
+                    <label for="inputTel" class="col-sm-2 control-label">Mối quan tâm</label>
+                    <div class="col-sm-4">
+                      <select id="interestSelect" class="form-control" th:field="*{mcpsRevieweraccount.mcpsInterests}" multiple="multiple" >
+        				<option th:each="interest : ${interests}" 
+                				th:field="*{mcpsRevieweraccount.mcpsInterests}" 
+                				th:value="${interest.id}" 
+                				th:text="${interest.interestName}">                    
+        				</option>
+					  </select>
+                    </div>
+                  </div>
                 </div>
                 </div>
                 <!-- reviewer infor close -->
@@ -215,6 +227,8 @@ xmlns:th="http://www.thymeleaf.org">
           </div>
           <!-- Your Page Content Here -->
         </section><!-- /.content -->
+        <link th:href="@{/resources/plugins/multiselect/bootstrap-multiselect.css}" href="/resources/plugins/multiselect/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
+        <script th:src="@{/resources/plugins/multiselect/bootstrap-multiselect.js}" src="/resources/plugins/multiselect/bootstrap-multiselect.js" type="text/javascript"></script>
         <script th:src="@{/resources/scripts/admin/adminaccountmanagement.js}" src="/resources/scripts/admin/adminaccountmanagement.js" type="text/javascript"></script>
         </div>
 </body>

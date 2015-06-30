@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dd.mcps.entities.McpsAccount;
 import com.dd.mcps.entities.McpsGender;
+import com.dd.mcps.entities.McpsInterest;
 import com.dd.mcps.entities.McpsOccupation;
 import com.dd.mcps.entities.McpsRole;
 import com.dd.mcps.storage.IAccountStorage;
@@ -86,6 +87,14 @@ public class ManageAccountService {
 	 */
 	public List<McpsOccupation> getOccupations() {
 		return getAccountStorage().getAllOccupation();
+	}
+	
+	/**
+	 * Get all interests of people in system
+	 * @return
+	 */
+	public List<McpsInterest> getAllInterests() {
+		return accountStorage.getAllInterests();
 	}
 	
 	/**

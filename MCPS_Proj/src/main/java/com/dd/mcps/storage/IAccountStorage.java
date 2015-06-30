@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dd.mcps.entities.McpsAccount;
 import com.dd.mcps.entities.McpsGender;
+import com.dd.mcps.entities.McpsInterest;
 import com.dd.mcps.entities.McpsOccupation;
 import com.dd.mcps.entities.McpsRole;
 
@@ -72,6 +73,12 @@ public interface IAccountStorage {
 	 * @return list of occupations
 	 */
 	public List<McpsOccupation> getAllOccupation();
+	
+	/**
+	 * retrieve all interests in db
+	 * @return list of interests
+	 */
+	public List<McpsInterest> getAllInterests();
 	
 	/**
 	 * search account with specific criteria

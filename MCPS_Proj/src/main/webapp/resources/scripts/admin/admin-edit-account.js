@@ -2,6 +2,10 @@ $(document).ready(function(){
 	
     setDatePickerEndDate($('#datetimepickerFoundingDay'), false);
     setDatePickerEndDate( $('#datetimepickerBirthday'), false);
+    $('#interestSelect').multiselect({
+    	maxHeight: 200,
+    	includeSelectAllOption: true
+    });
 	
 	///////////////////CREATE ACCOUNT////////////////////////
 	
