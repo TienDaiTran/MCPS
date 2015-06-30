@@ -1,12 +1,14 @@
 package com.dd.mcps.entities;
 
-// Generated Jun 18, 2015 6:31:16 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jun 29, 2015 11:54:07 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,7 +22,7 @@ import javax.persistence.Table;
 @Table(name = "mcps_interest", catalog = "mcps")
 public class McpsInterest implements java.io.Serializable {
 
-	private short id;
+	private Short id;
 	private String interestName;
 	private Set<McpsRevieweraccount> mcpsRevieweraccounts = new HashSet<McpsRevieweraccount>(
 			0);
@@ -30,14 +32,9 @@ public class McpsInterest implements java.io.Serializable {
 	public McpsInterest() {
 	}
 
-	public McpsInterest(short id) {
-		this.id = id;
-	}
-
-	public McpsInterest(short id, String interestName,
+	public McpsInterest(String interestName,
 			Set<McpsRevieweraccount> mcpsRevieweraccounts,
 			Set<McpsCampaign> mcpsCampaigns, Set<McpsSurvey> mcpsSurveys) {
-		this.id = id;
 		this.interestName = interestName;
 		this.mcpsRevieweraccounts = mcpsRevieweraccounts;
 		this.mcpsCampaigns = mcpsCampaigns;
@@ -45,12 +42,13 @@ public class McpsInterest implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "ID", unique = true, nullable = false)
-	public short getId() {
+	public Short getId() {
 		return this.id;
 	}
 
-	public void setId(short id) {
+	public void setId(Short id) {
 		this.id = id;
 	}
 

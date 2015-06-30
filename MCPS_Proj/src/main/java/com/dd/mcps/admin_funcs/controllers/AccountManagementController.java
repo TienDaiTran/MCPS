@@ -53,6 +53,7 @@ public class AccountManagementController {
 		model.addAttribute("content", "admin/partition/account-management");
 		model.addAttribute("roles", manageAccountService.getAllRoles());
 		model.addAttribute("accounts", manageAccountService.getAllAccounts());
+		model.addAttribute("sidebarId", 1);
 		
 		return "admin/admin-home-page";
 	}
@@ -89,7 +90,6 @@ public class AccountManagementController {
 		model.addAttribute("roles", manageAccountService.getAllRoles());
 		model.addAttribute("accounts", accounts);
 		return "admin/partition/account-management :: listAccount";
-		//return "admin/admin-home-page";
 	}
 	
 	@RequestMapping(value = "/admin/account", method = RequestMethod.POST, 
@@ -141,6 +141,7 @@ public class AccountManagementController {
 		model.addAttribute("genders", manageAccountService.getGenders());
 		model.addAttribute("occupations", manageAccountService.getOccupations());
 		model.addAttribute("newAccount", newAccount);
+		model.addAttribute("sidebarId", 1);
 		
 		return "admin/admin-home-page";
 	}
@@ -182,6 +183,7 @@ public class AccountManagementController {
 				// bo qua
 			}
 		}
+		model.addAttribute("sidebarId", 1);
 		
 		return "admin/admin-home-page";
 	}

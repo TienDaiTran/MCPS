@@ -1,6 +1,6 @@
 package com.dd.mcps.entities;
 
-// Generated Jun 18, 2015 6:31:16 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jun 29, 2015 11:54:07 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -121,7 +121,7 @@ public class McpsAccount implements java.io.Serializable {
 		this.mcpsCampaignAccounts = mcpsCampaignAccounts;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "mcpsAccount")
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "mcpsAccount", cascade = CascadeType.ALL)
 	public McpsPartneraccount getMcpsPartneraccount() {
 		return this.mcpsPartneraccount;
 	}
@@ -139,7 +139,7 @@ public class McpsAccount implements java.io.Serializable {
 		this.mcpsCampaigns = mcpsCampaigns;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "mcpsAccount")
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "mcpsAccount", cascade = CascadeType.ALL)
 	public McpsRevieweraccount getMcpsRevieweraccount() {
 		return this.mcpsRevieweraccount;
 	}
