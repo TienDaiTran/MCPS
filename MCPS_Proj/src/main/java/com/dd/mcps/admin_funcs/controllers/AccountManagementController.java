@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dd.mcps.HomeController;
 import com.dd.mcps.entities.McpsAccount;
 import com.dd.mcps.entities.McpsGender;
 import com.dd.mcps.entities.McpsInterest;
@@ -37,6 +36,7 @@ import com.dd.mcps.entities.McpsRevieweraccount;
 import com.dd.mcps.entities.McpsRole;
 import com.dd.mcps.general_user_funcs.services.LoginService;
 import com.dd.mcps.services.ManageAccountService;
+import com.dd.mcps.site.controller.HomeController;
 import com.dd.mcps.util.HibernateUtil;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
@@ -186,16 +186,20 @@ public class AccountManagementController {
 				McpsAccount editAccount = manageAccountService.getAccount(id);
 				model.addAttribute("content", "admin/partition/edit-account");
 				model.addAttribute("roles", manageAccountService.getAllRoles());
-				model.addAttribute("genders", manageAccountService.getGenders());
-				model.addAttribute("occupations", manageAccountService.getOccupations());
-				model.addAttribute("interests", manageAccountService.getAllInterests());
 				model.addAttribute("editAccount", editAccount);
-				// make selected interest list
-				List<Short> selectedInterests = new ArrayList<Short>();
-				for (McpsInterest interest : editAccount.getMcpsRevieweraccount().getMcpsInterests()) {
-					selectedInterests.add(interest.getId());
+				// attributes only for reviewer
+				if (editAccount.getMcpsRole().getId() == 3) {
+					model.addAttribute("genders", manageAccountService.getGenders());
+					model.addAttribute("occupations", manageAccountService.getOccupations());
+					model.addAttribute("interests", manageAccountService.getAllInterests());
+					
+					// make selected interest list
+					List<Short> selectedInterests = new ArrayList<Short>();
+					for (McpsInterest interest : editAccount.getMcpsRevieweraccount().getMcpsInterests()) {
+						selectedInterests.add(interest.getId());
+					}
+					model.addAttribute("selectedInterests", selectedInterests);
 				}
-				model.addAttribute("selectedInterests", selectedInterests);
 			} catch (NumberFormatException e) {
 				// bo qua
 			}

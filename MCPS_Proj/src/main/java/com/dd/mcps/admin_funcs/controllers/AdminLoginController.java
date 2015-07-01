@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dd.mcps.HomeController;
 import com.dd.mcps.entities.McpsAccount;
 import com.dd.mcps.general_user_funcs.services.LoginService;
 import com.dd.mcps.services.ManageAccountService;
+import com.dd.mcps.site.controller.HomeController;
 import com.dd.mcps.util.HibernateUtil;
 
 @Controller
@@ -30,28 +30,6 @@ public class AdminLoginController {
 	
 	@Autowired
 	private ManageAccountService manageAccountService;
-	
-//	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-//	public String home(Locale locale, Model model) {
-//		logger.info("Redirect to admin login page");
-//		
-//		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//		
-//		return "admin_login";
-//	}
-//	
-//	@RequestMapping(value = "/adminlogin", method = RequestMethod.POST)
-//	public @ResponseBody String home(HttpServletRequest request,
-//			@RequestParam(value="email", required=false) String email,
-//			@RequestParam(value="password", required=false) String password) {
-//		//logger.info("Welcome home! The client locale is {}.", locale);
-//		Boolean accountExist = manageAccountService.isAccountExist(email, password, "Admin");
-//		if (accountExist) {
-//			return "Exist";
-//		} else {
-//			return "Email or Password is not valid.";
-//		}
-//	}
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {

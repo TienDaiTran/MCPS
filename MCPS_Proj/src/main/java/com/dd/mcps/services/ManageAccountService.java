@@ -25,6 +25,10 @@ public class ManageAccountService {
 		return accountStorage.getAccount(accountID);
 	}
 	
+	public McpsAccount getAccount(String email) {
+		return accountStorage.getAccount(email);
+	}
+	
 	/**
 	 * check account exist or not
 	 * @param email
@@ -48,10 +52,14 @@ public class ManageAccountService {
 	public Boolean isAccountExist(String email, String password, String role) {
 		List<McpsAccount> accounts = getAccountStorage().accountExist(email, password);
 		if (accounts.size() > 0) {
-			for (McpsAccount acc : accounts) {
-				if (role.equals(acc.getMcpsRole().getRoleName())) {
-					return true;
+			if (role != null) {
+				for (McpsAccount acc : accounts) {
+					if (role.equals(acc.getMcpsRole().getRoleName())) {
+						return true;
+					}
 				}
+			} else {
+				return true;
 			}
 		}
 		return false;

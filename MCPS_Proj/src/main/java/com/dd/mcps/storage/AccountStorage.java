@@ -56,10 +56,35 @@ public class AccountStorage implements IAccountStorage{
 		Hibernate.initialize(found.getMcpsRole());
 		Hibernate.initialize(found.getMcpsPartneraccount());
 		Hibernate.initialize(found.getMcpsRevieweraccount());
-		Hibernate.initialize(found.getMcpsRevieweraccount().getMcpsInterests());
+		if (found.getMcpsRevieweraccount() != null) {
+			Hibernate.initialize(found.getMcpsRevieweraccount().getMcpsInterests());
+		}
 		tx.commit();
 		session.close();
 		return found;
+	}
+	
+	/**
+	 * retrieve accounts by email
+	 * @return account, null if not exist
+	 */
+	public McpsAccount getAccount(String email) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from McpsAccount ac where ac.email = :email");
+		query.setParameter("email", email);
+		List<McpsAccount> accounts = query.list();
+		for (McpsAccount acc : accounts) {
+			Hibernate.initialize(acc.getMcpsRole());
+		}
+		tx.commit();
+		session.close();
+		if (accounts.size() > 0) {
+			return accounts.get(0);
+		} else {
+			return null;
+		}
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package com.dd.mcps;
+package com.dd.mcps.site.controller;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -30,11 +30,12 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Redirect to login page");
+		logger.info("Redirect to home page");
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		model.addAttribute("content", "site/partition/home-body");
 		
-		return "login";
+		return "site/homepage";
 	}
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)

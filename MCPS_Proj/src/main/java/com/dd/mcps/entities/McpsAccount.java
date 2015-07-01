@@ -1,6 +1,6 @@
 package com.dd.mcps.entities;
 
-// Generated Jun 29, 2015 11:54:07 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 1, 2015 2:40:35 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +32,7 @@ public class McpsAccount implements java.io.Serializable {
 	private McpsRole mcpsRole;
 	private String email;
 	private String pass;
+	private String displayName;
 	private String state;
 	private Set<McpsCampaignAccount> mcpsCampaignAccounts = new HashSet<McpsCampaignAccount>(
 			0);
@@ -42,20 +43,24 @@ public class McpsAccount implements java.io.Serializable {
 	public McpsAccount() {
 	}
 
-	public McpsAccount(McpsRole mcpsRole, String email, String pass) {
+	public McpsAccount(McpsRole mcpsRole, String email, String pass,
+			String displayName) {
 		this.mcpsRole = mcpsRole;
 		this.email = email;
 		this.pass = pass;
+		this.displayName = displayName;
 	}
 
 	public McpsAccount(McpsRole mcpsRole, String email, String pass,
-			String state, Set<McpsCampaignAccount> mcpsCampaignAccounts,
+			String displayName, String state,
+			Set<McpsCampaignAccount> mcpsCampaignAccounts,
 			McpsPartneraccount mcpsPartneraccount,
 			Set<McpsCampaign> mcpsCampaigns,
 			McpsRevieweraccount mcpsRevieweraccount) {
 		this.mcpsRole = mcpsRole;
 		this.email = email;
 		this.pass = pass;
+		this.displayName = displayName;
 		this.state = state;
 		this.mcpsCampaignAccounts = mcpsCampaignAccounts;
 		this.mcpsPartneraccount = mcpsPartneraccount;
@@ -100,6 +105,15 @@ public class McpsAccount implements java.io.Serializable {
 
 	public void setPass(String pass) {
 		this.pass = pass;
+	}
+
+	@Column(name = "DisplayName", nullable = false)
+	public String getDisplayName() {
+		return this.displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
 	@Column(name = "State")

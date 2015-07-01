@@ -29,6 +29,13 @@ public interface IAccountStorage {
 	public McpsAccount getAccount(long accountID);
 	
 	/**
+	 * get an account with a specific id
+	 * @param accountID
+	 * @return null if email is not exist
+	 */
+	public McpsAccount getAccount(String email);
+	
+	/**
 	 * delete an account with a specific id
 	 * @param accountID
 	 */
