@@ -65,10 +65,10 @@ public interface ICampaignStorage {
 	/**
 	 * Change to wait for review
 	 */
-	public void waitForReview();
+	public void waitForReview(Long id);
 	
 	/**
 	 * Complete campaign
 	 */
-	public void complete();
+	public void complete(Long id);
 }

@@ -5,8 +5,14 @@
  
 	<bean id="accountStorage" class="com.dd.mcps.storage.AccountStorage"></bean>
 	
+	<bean id="campaignStorage" class="com.dd.mcps.storage.CampaignStorage"></bean>
+	
 	<bean id="manageAccountService" class="com.dd.mcps.services.ManageAccountService">
 		<property name="accountStorage" ref="accountStorage"></property>
+	</bean>
+	
+	<bean id="manageCampaignService" class="com.dd.mcps.services.ManageCampaignService">
+		<property name="campaignStorage" ref="campaignStorage"></property>
 	</bean>
  
  	<bean id="loginService" class="com.dd.mcps.general_user_funcs.services.LoginService">

@@ -1,7 +1,11 @@
 $(document).ready(function(){
 	
-    setDatePickerEndDate($('#datetimepickerFoundingDay'));
-    setDatePickerEndDate( $('#datetimepickerBirthday'));
+    setDatePickerEndDate($('#datetimepickerFoundingDay'), false);
+    setDatePickerEndDate( $('#datetimepickerBirthday'), false);
+    $('#interestSelect').multiselect({
+    	maxHeight: 200,
+    	includeSelectAllOption: true
+    });
 	
 	///////////////////CREATE ACCOUNT////////////////////////
 	
@@ -40,7 +44,7 @@ $(document).ready(function(){
 		// check day
 		$(".mydatetime").each(function(){
 			var hiddenParent = $(this).parents(".hidden");
-			if (hiddenParent == null) {
+			if (hiddenParent != null) {
 				// not check datetime in hidden region
 				result = true;
 				return;

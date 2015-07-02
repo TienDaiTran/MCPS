@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dd.mcps.entities.McpsAccount;
 import com.dd.mcps.entities.McpsGender;
+import com.dd.mcps.entities.McpsInterest;
 import com.dd.mcps.entities.McpsOccupation;
 import com.dd.mcps.entities.McpsRole;
 import com.dd.mcps.storage.IAccountStorage;
@@ -22,6 +23,10 @@ public class ManageAccountService {
 	
 	public McpsAccount getAccount(long accountID) {
 		return accountStorage.getAccount(accountID);
+	}
+	
+	public McpsAccount getAccount(String email) {
+		return accountStorage.getAccount(email);
 	}
 	
 	/**
@@ -47,10 +52,14 @@ public class ManageAccountService {
 	public Boolean isAccountExist(String email, String password, String role) {
 		List<McpsAccount> accounts = getAccountStorage().accountExist(email, password);
 		if (accounts.size() > 0) {
-			for (McpsAccount acc : accounts) {
-				if (role.equals(acc.getMcpsRole().getRoleName())) {
-					return true;
+			if (role != null) {
+				for (McpsAccount acc : accounts) {
+					if (role.equals(acc.getMcpsRole().getRoleName())) {
+						return true;
+					}
 				}
+			} else {
+				return true;
 			}
 		}
 		return false;
@@ -86,6 +95,14 @@ public class ManageAccountService {
 	 */
 	public List<McpsOccupation> getOccupations() {
 		return getAccountStorage().getAllOccupation();
+	}
+	
+	/**
+	 * Get all interests of people in system
+	 * @return
+	 */
+	public List<McpsInterest> getAllInterests() {
+		return accountStorage.getAllInterests();
 	}
 	
 	/**

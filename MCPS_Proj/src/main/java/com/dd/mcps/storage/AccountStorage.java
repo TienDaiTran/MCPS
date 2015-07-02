@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 
 import com.dd.mcps.entities.McpsAccount;
 import com.dd.mcps.entities.McpsGender;
+import com.dd.mcps.entities.McpsInterest;
 import com.dd.mcps.entities.McpsOccupation;
 import com.dd.mcps.entities.McpsRole;
 import com.dd.mcps.util.HibernateUtil;
@@ -55,9 +56,35 @@ public class AccountStorage implements IAccountStorage{
 		Hibernate.initialize(found.getMcpsRole());
 		Hibernate.initialize(found.getMcpsPartneraccount());
 		Hibernate.initialize(found.getMcpsRevieweraccount());
+		if (found.getMcpsRevieweraccount() != null) {
+			Hibernate.initialize(found.getMcpsRevieweraccount().getMcpsInterests());
+		}
 		tx.commit();
 		session.close();
 		return found;
+	}
+	
+	/**
+	 * retrieve accounts by email
+	 * @return account, null if not exist
+	 */
+	public McpsAccount getAccount(String email) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from McpsAccount ac where ac.email = :email");
+		query.setParameter("email", email);
+		List<McpsAccount> accounts = query.list();
+		for (McpsAccount acc : accounts) {
+			Hibernate.initialize(acc.getMcpsRole());
+		}
+		tx.commit();
+		session.close();
+		if (accounts.size() > 0) {
+			return accounts.get(0);
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -178,6 +205,22 @@ public class AccountStorage implements IAccountStorage{
 		tx.commit();
 		session.close();
 		return occupations;
+	}
+	
+	/**
+	 * retrieve all interests in db
+	 * @return list of interests
+	 */
+	@Override
+	public List<McpsInterest> getAllInterests() {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from McpsInterest");
+		List<McpsInterest> interests = query.list();
+		tx.commit();
+		session.close();
+		return interests;
 	}
 	
 	/**

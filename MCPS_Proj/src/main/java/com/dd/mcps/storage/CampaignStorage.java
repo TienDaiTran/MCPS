@@ -72,6 +72,7 @@ public class CampaignStorage implements ICampaignStorage {
 		List<McpsCampaign> campaigns = query.list();
 		for (McpsCampaign camp : campaigns) {
 			Hibernate.initialize(camp.getMcpsAccount());
+			Hibernate.initialize(camp.getMcpsAccount().getMcpsPartneraccount());
 			Hibernate.initialize(camp.getMcpsInterests());
 			Hibernate.initialize(camp.getMcpsCampaignAccounts());
 		}
@@ -98,17 +99,29 @@ public class CampaignStorage implements ICampaignStorage {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String queryString = "select camp from McpsCampaign as camp inner join camp.mcpsAccount as ac inner join ac.mcpsPartneraccount as init inner join camp.mcpsInterests as inter "
+		String queryString = "";
+		if ("Admin".equals(partnerName)) {
+			queryString = "select camp from McpsCampaign as camp left join camp.mcpsAccount as init inner join camp.mcpsInterests as inter "
+					+ "where (:id is null or camp.id = :id) and "
+					+ "(:campaignName = '%%' or camp.campaignName like :campaignName) and "
+					+ "(:categoryID is null or inter.id = :categoryID) and "
+					+ "(init.mcpsPartneraccount is not null) and "
+					+ "(:createdDate is null or camp.initiateDate = :createdDate)";
+		} else {
+			queryString = "select camp from McpsCampaign as camp left join camp.mcpsAccount.mcpsPartneraccount as init inner join camp.mcpsInterests as inter "
 				+ "where (:id is null or camp.id = :id) and "
-				+ "(:campaignName = '' or camp.campaignName like :campaignName) and "
+				+ "(:campaignName = '%%' or camp.campaignName like :campaignName) and "
+				+ "(:partnerName = '%%' or init.partnerName like :partnerName) and "
 				+ "(:categoryID is null or inter.id = :categoryID) and "
-				+ "(:partnerName = '' or init.partnerName like :partnerName) and "
 				+ "(:createdDate is null or camp.initiateDate = :createdDate)";
+		}
 		Query query = session.createQuery(queryString);
 		query.setParameter("id", campaignID);
 		query.setParameter("campaignName", "%" + campaignName + "%");
 		query.setParameter("categoryID", categoryID);
-		query.setParameter("partnerName", "%" + partnerName + "%");
+		if (!"Admin".equals(partnerName)) {
+			query.setParameter("partnerName", "%" + partnerName + "%");
+		}
 		query.setParameter("createdDate", createdDate);
 		List<McpsCampaign> campaigns = query.list();
 		for (McpsCampaign camp : campaigns) {
@@ -123,19 +136,42 @@ public class CampaignStorage implements ICampaignStorage {
 
 	@Override
 	public void publish(Long id, boolean isPublish) {
-		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		McpsCampaign campaign = (McpsCampaign) session.get(McpsCampaign.class, id);
+		if (isPublish) {
+			campaign.setState("Published");
+		} else {
+			campaign.setState("Unpublished");
+		}	
+		session.update(campaign);
+		tx.commit();
+		session.close();
 	}
 
 	@Override
-	public void waitForReview() {
-		// TODO Auto-generated method stub
-		
+	public void waitForReview(Long id) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		McpsCampaign campaign = (McpsCampaign) session.get(McpsCampaign.class, id);
+		campaign.setState("Wait for review");
+		session.update(campaign);
+		tx.commit();
+		session.close();
 	}
 
 	@Override
-	public void complete() {
-		// TODO Auto-generated method stub
-		
+	public void complete(Long id) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		McpsCampaign campaign = (McpsCampaign) session.get(McpsCampaign.class, id);
+		campaign.setState("Completed");
+		session.update(campaign);
+		tx.commit();
+		session.close();
 	}
 
 }

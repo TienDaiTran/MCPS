@@ -1,6 +1,6 @@
 package com.dd.mcps.entities;
 
-// Generated Jun 18, 2015 6:31:16 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 1, 2015 2:40:35 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;

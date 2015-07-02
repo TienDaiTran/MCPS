@@ -10,12 +10,12 @@ xmlns:th="http://www.thymeleaf.org">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Quản lý tài khoản
+            Quản lý chiến dịch
             <small></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-            <li class="active">Quản lý tài khoản</li>
+            <li class="active">Quản lý chiến dịch</li>
           </ol>
         </section>
         
@@ -29,22 +29,22 @@ xmlns:th="http://www.thymeleaf.org">
         <!-- Search form begin -->
         <div class="box">
           <div class="box-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="campaignSearchForm" th:action="@{/admin/campaign}">
               <div class="form-group">
-                <label for="inputID" class="col-sm-1 control-label">Mã chiến dịch</label>
+                <label for="inputID" class="col-sm-2 control-label">Mã chiến dịch</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="inputID" name="id" placeholder="ID"/>
+                  <input type="text" class="form-control" id="inputID" name="campaignID" placeholder="ID"/>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail" class="col-sm-1 control-label">Tên chiến dịch</label>
+                <label for="inputEmail" class="col-sm-2 control-label">Tên chiến dịch</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="inputEmail" name="name" placeholder="Tên chiến dịch"/>
+                  <input type="text" class="form-control" id="inputEmail" name="campaignName" placeholder="Tên chiến dịch"/>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-1 control-label">Danh mục</label>
-                <input id="inputRole" type="hidden" name="category" value="0"/>
+                <label class="col-sm-2 control-label">Danh mục</label>
+                <input id="inputCategory" type="hidden" name="category" value="0"/>
                 <div class="dropdown col-sm-4">
                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                     Dropdown
@@ -52,7 +52,7 @@ xmlns:th="http://www.thymeleaf.org">
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                   	<li role="presentation"><a role="menuitem" tabindex="-1" name="0">All</a></li>
-                    <li role="presentation" th:each="role : ${roles}"><a role="menuitem" tabindex="-1" th:name="${role.id}" th:text="${role.roleName}">Action</a></li>
+                    <li role="presentation" th:each="category : ${categories}"><a role="menuitem" tabindex="-1" th:name="${category.id}" th:text="${category.interestName}">Action</a></li>
                     <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1" >Another action</a></li>
                     <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1" >Something else here</a></li>
                     <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1" >Separated link</a></li>
@@ -60,8 +60,28 @@ xmlns:th="http://www.thymeleaf.org">
                 </div>
               </div>
               <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">Người tạo</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" id="inputEmail" name="createrName" placeholder="Nguyen Van A"/>
+                </div>
+              </div>
+              <!-- Ngày bắt đầu publish -->
+              <!-- date picker-->
+                        <div class="form-group">
+                          <label for="inputInitDate" class="col-sm-2 control-label" style="text-align:right; margin-left:0px;">Ngày tạo</label>
+                          <div class="col-sm-4">
+                            <div class='input-group date datepicker' id='datetimepickerPublishDay'>
+                              <input id="inputInitDate" type='text' class="form-control mydatetime" name="initDate"/>
+                              <span class="input-group-addon">
+                                <span class="fa fa-calendar">
+                                </span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+              <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-2">
-                  <button id="btnSearch" type="button" class="btn btn-default"><i class="fa fa-search"></i> Tìm kiếm</button>
+                  <button id="btnSearch" type="submit" class="btn btn-default"><i class="fa fa-search"></i> Tìm kiếm</button>
                 </div>
               </div>
             </form>
@@ -71,43 +91,39 @@ xmlns:th="http://www.thymeleaf.org">
         <!-- List Account begin -->
         <div id="listAccountDiv">
         <div class="box" th:fragment="listCampaign">
-          <div class="box-header">
-            <h3 class="box-title">Data Table With Full Features</h3>
-          </div><!-- /.box-header -->
           <div class="box-body">
-          	<div><a href="campaign/create">Thêm tài khoản</a></div>
+          	<div><a href="campaign/create">Thêm chiến dịch</a></div>
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Account ID</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>State</th>
+                  <th>Campaign ID</th>
+                  <th>Campaign Name</th>
+                  <th>Category</th>
+                  <th>Partner Name</th>
+                  <th>Initial Date</th>
                   <th>Edit</th>
-                  <th>Block</th>
                   <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
-                <tr th:each="account : ${accounts}">
-                  <td class="id-account" th:text="${account.id}"></td>
-                  <td th:text="${account.email}"></td>
-                  <td th:text="${account.mcpsRole.roleName}"></td>
-                  <td th:text="${account.state}"></td>
-                  <td><a class="edit-anchor" th:href="@{/admin/account/edit(id=${account.id})}" >Edit</a></td>
-                  <td th:if="${account.state} == active"><a class="block-anchor">Block</a></td>
-                  <td th:if="${account.state} == block"><a class="unblock-anchor">Unblock</a></td>
+                <tr th:each="campaign : ${campaigns}">
+                  <td class="id-campaign" th:text="${campaign.id}"></td>
+                  <td th:text="${campaign.campaignName}"></td>
+                  <td th:text="${campaign.mcpsInterests.toArray()[0].interestName}"></td>
+                  <td th:text="${campaign.mcpsAccount.mcpsPartneraccount}?${campaign.mcpsAccount.mcpsPartneraccount.partnerName}:'Admin'"></td>
+                  <td th:text="*{#dates.format(campaign.initiateDate,'dd/MM/yyyy')}"></td>
+                  <td><a class="edit-anchor" th:href="@{/admin/campaign/edit(id=${campaign.id})}" >Edit</a></td>
                   <td><a class="delete-anchor">Delete</a></td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <th>Account ID</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>State</th>
+                  <th>Campaign ID</th>
+                  <th>Campaign Name</th>
+                  <th>Category</th>
+                  <th>Partner Name</th>
+                  <th>Initial Date</th>
                   <th>Edit</th>
-                  <th>Block</th>
                   <th>Delete</th>
                 </tr>
               </tfoot>
@@ -120,7 +136,7 @@ xmlns:th="http://www.thymeleaf.org">
     </div>
     <!-- Your Page Content Here -->
   </section><!-- /.content -->
-  <script th:src="@{/resources/scripts/admin/adminaccountmanagement.js}" src="/resources/scripts/admin/adminaccountmanagement.js" type="text/javascript"></script>
+  <script th:src="@{/resources/scripts/admin/admin-campaign-management.js}" src="/resources/scripts/admin/admin-campaign-management.js" type="text/javascript"></script>
   </div>
 </body>
 </html>

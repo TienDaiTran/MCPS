@@ -1,16 +1,20 @@
-function setDatePickerEndDate(datepicker) {
+function setDatePickerEndDate(datepicker, autoSetDate) {
 	if (datepicker != null) {
-		datepicker.datepicker("endDate", new Date());
-		var validDefaultDate = new Date();
-		validDefaultDate.setDate(validDefaultDate.getDate() - 1);
-		datepicker.datepicker("setDate", validDefaultDate);
+		datepicker.datepicker("setEndDate", new Date());
+		if (autoSetDate == true) {
+			var validDefaultDate = new Date();
+			validDefaultDate.setDate(validDefaultDate.getDate() - 1);
+			datepicker.datepicker("setDate", validDefaultDate);
+		}
 	}
 }
 
-function setDatePickerStartDate(datepicker) {
+function setDatePickerStartDate(datepicker, autoSetDate) {
 	if (datepicker != null) {
-		datepicker.datepicker("startDate", new Date());
-		datepicker.datepicker("setDate", new Date());
+		datepicker.datepicker('setStartDate', new Date());
+		if (autoSetDate == true) {
+			datepicker.datepicker('setDate', new Date());
+		}
 	}
 }
 

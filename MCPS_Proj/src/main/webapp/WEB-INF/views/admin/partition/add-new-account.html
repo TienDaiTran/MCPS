@@ -55,7 +55,7 @@ xmlns:th="http://www.thymeleaf.org">
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Vai trò</label>
-                  <input type="hidden" class="form-control" id="inputRole" th:name="*{mcpsRole.id}" th:value="1"/>
+                  <input type="hidden" class="form-control" id="inputRole" th:name="mcpsRole.id" th:value="1"/>
                   <div class="dropdown col-sm-4">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                       Admin
@@ -67,6 +67,12 @@ xmlns:th="http://www.thymeleaf.org">
                       <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1">Partner</a></li>
                       <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1">Reviewer</a></li>
                     </ul>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputDisplayName" class="col-sm-2 control-label">Display Name*</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" id="inputDisplayName" placeholder="Display Name" th:field="*{displayName}" required="required"/>
                   </div>
                 </div>
                 </div>
@@ -204,6 +210,18 @@ xmlns:th="http://www.thymeleaf.org">
                       <input type="tel" class="form-control" id="inputTel" placeholder="0906924379" th:field="*{mcpsRevieweraccount.tel}" required="required"/>
                     </div>
                   </div>
+                  <div class="form-group">
+                    <label for="inputTel" class="col-sm-2 control-label">Mối quan tâm</label>
+                    <div class="col-sm-4">
+                      <select id="interestSelect" class="form-control" th:field="*{mcpsRevieweraccount.mcpsInterests}" multiple="multiple" >
+        				<option th:each="interest : ${interests}" 
+                				th:field="*{mcpsRevieweraccount.mcpsInterests}" 
+                				th:value="${interest.id}" 
+                				th:text="${interest.interestName}">                    
+        				</option>
+					  </select>
+                    </div>
+                  </div>
                 </div>
                 </div>
                 <!-- reviewer infor close -->
@@ -215,6 +233,8 @@ xmlns:th="http://www.thymeleaf.org">
           </div>
           <!-- Your Page Content Here -->
         </section><!-- /.content -->
+        <link th:href="@{/resources/plugins/multiselect/bootstrap-multiselect.css}" href="/resources/plugins/multiselect/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
+        <script th:src="@{/resources/plugins/multiselect/bootstrap-multiselect.js}" src="/resources/plugins/multiselect/bootstrap-multiselect.js" type="text/javascript"></script>
         <script th:src="@{/resources/scripts/admin/adminaccountmanagement.js}" src="/resources/scripts/admin/adminaccountmanagement.js" type="text/javascript"></script>
         </div>
 </body>

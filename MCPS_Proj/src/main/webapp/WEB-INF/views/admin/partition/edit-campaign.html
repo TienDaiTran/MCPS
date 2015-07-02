@@ -15,25 +15,26 @@ xmlns:th="http://www.thymeleaf.org">
           </h1>
           <ol class="breadcrumb">
             <li><a href="./././"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-            <li><a href="././">Quản lý chiến dịch</a></li>
-            <li class="active">Tạo chiến dịch</li>
+            <li><a href="././">Quản lý tài khoản</a></li>
+            <li class="active">Tạo tài khoản</li>
           </ol>
         </section>
         
-<!-- Main content -->
+<!-- Main content -->	
         <section th:fragment="content" class="content">
           <div id="toast" style="display:none">
 <img src="img/refresh.png"></img> 
 </div>
-          <form id="campaignInfoForm" class="form-horizontal" th:action="@{/admin/campaign/create}" method="POST" enctype="multipart/form-data">
+          <form id="campaignInfoForm" class="form-horizontal" th:action="@{/admin/campaign/edit}" method="POST" enctype="multipart/form-data" th:object="${campaignInfo}">
             <div class="row">
               <div class="col-xs-12">
+              <input type="hidden" class="form-control" th:field="*{id}" readonly="readonly"/>
                 <!-- Image box begin -->
                 <div class="col-xs-4">
                 <div class="row">
                   <div class="box">
                     <div class="box-body">
-                      <img class="img-responsive" id="imgBanner" src="#" alt="banner" />
+                      <img class="img-responsive" id="imgBanner" th:src="@{*{bannerImage}}" alt="banner" />
                     </div>
                   </div>
                   <div class="box">
@@ -52,7 +53,7 @@ xmlns:th="http://www.thymeleaf.org">
                     <div class="box">
                       <div class="box-body">
                       	<input type="hidden" class="form-control" name="createrID" th:value="${createrID}" required="required"></input>
-                        <input type="text" class="form-control" name="campaignName" placeholder="Tên chiến dịch" required="required"></input>
+                        <input type="text" class="form-control" name="campaignName" th:value="*{campaignName}" placeholder="Tên chiến dịch" required="required"></input>
                       </div>
                     </div>
                   </div>
@@ -61,7 +62,7 @@ xmlns:th="http://www.thymeleaf.org">
                       <div class="box-body">
                         <div class="form-group">
                           <label class="col-sm-3 control-label" style="text-align:left">Danh mục</label>
-                          <input type="hidden" class="form-control" id="inputCategory" name="category" value="1"/>
+                          <input type="hidden" class="form-control" id="inputCategory" name="category" th:value="*{mcpsInterests.toArray()[0].id}" value="1"/>
                           <div class="dropdown col-sm-4">
                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                               Văn phòng phẩm
@@ -82,7 +83,7 @@ xmlns:th="http://www.thymeleaf.org">
                           <label for="inputProto" class="col-sm-3 control-label" style="text-align:left">Số lượng mẫu</label>
                           <div class="col-sm-8">
                             <div class="input-group">
-                              <input id="inputProto" type="number" class="form-control" name="prototypeQuantity" placeholder="Số sản phầm dùng thử" required="required" min="1" value="1"></input>
+                              <input id="inputProto" type="number" class="form-control" name="prototypeQuantity" th:value="*{prototypeQuantity}" placeholder="Số sản phầm dùng thử" required="required" min="1" value="1"></input>
                               <span class="input-group-addon"> sản phẩm</span>
                             </div>
                           </div>
@@ -93,7 +94,7 @@ xmlns:th="http://www.thymeleaf.org">
                           <label for="inputPublishDate" class="col-sm-3 control-label" style="text-align:left">Ngày công bố</label>
                           <div class="col-sm-4">
                             <div class='input-group date datepicker' id='datetimepickerPublishDay'>
-                              <input id="inputPublishDate" type='text' class="form-control mydatetime" name="publishDate" required="required"/>
+                              <input id="inputPublishDate" type='text' th:value="*{#dates.format(publishDate,'dd/MM/yyyy')}" class="form-control mydatetime" name="publishDate" required="required"/>
                               <span class="input-group-addon">
                                 <span class="fa fa-calendar">
                                 </span>
@@ -106,7 +107,7 @@ xmlns:th="http://www.thymeleaf.org">
                           <label for="inputRecuitDay" class="col-sm-3 control-label" style="text-align:left">Thời gian tuyển người</label>
                           <div class="col-sm-8">
                             <div class="input-group">
-                              <input id="inputRecuitDay" type="number" class="form-control" name="recuitDay" placeholder="Số sản phầm dùng thử" required="required" min="1" value="1"></input>
+                              <input id="inputRecuitDay" type="number" class="form-control" name="recuitDay" th:value="*{recuitReviewerTime}" placeholder="Số sản phầm dùng thử" required="required" min="1" value="1"></input>
                               <span class="input-group-addon"> ngày</span>
                             </div>
                           </div>
@@ -116,7 +117,7 @@ xmlns:th="http://www.thymeleaf.org">
                           <label for="inputTrialDay" class="col-sm-3 control-label" style="text-align:left">Thời gian dùng thử</label>
                           <div class="col-sm-8">
                             <div class="input-group">
-                              <input id="inputTrialDay" type="number" class="form-control" name="trialDay" placeholder="Số sản phầm dùng thử" required="required" min="1" value="1"></input>
+                              <input id="inputTrialDay" type="number" class="form-control" name="trialDay" th:value="*{reviewTime}" placeholder="Số sản phầm dùng thử" required="required" min="1" value="1"></input>
                               <span class="input-group-addon"> ngày</span>
                             </div>
                           </div>
@@ -140,8 +141,7 @@ xmlns:th="http://www.thymeleaf.org">
                   </div><!-- /.box-header -->
                   <div class='box-body pad'>
                     <form>
-                      <textarea id="editor1" name="description" rows="10" cols="80">
-                        Mô tả về sản phẩm
+                      <textarea id="editor1" rows="10" cols="80" th:field="*{description}" th:name="description">
                       </textarea>
                     </form>
                   </div>
@@ -157,7 +157,7 @@ xmlns:th="http://www.thymeleaf.org">
           </form>
           <!-- Your Page Content Here -->
         </section><!-- /.content -->
-        <script th:src="@{/resources/scripts/admin/admin-create-campaign.js}" src="/resources/scripts/admin/admin-create-campaign.js" type="text/javascript"></script>
+        <script th:src="@{/resources/scripts/admin/edit-campaign.js}" src="/resources/scripts/admin/edit-campaign.js" type="text/javascript"></script>
         </div>
 </body>
 </html>

@@ -7,14 +7,20 @@ function showDetailInfoRegion(chosenRole) {
 		$("#detailInfoDiv").html("");
 	}
 	activeDatePicker();
-	setDatePickerEndDate($('#datetimepickerFoundingDay'));
-	setDatePickerEndDate($('#datetimepickerBirthday'));
+	setDatePickerEndDate($('#datetimepickerFoundingDay'), true);
+	setDatePickerEndDate($('#datetimepickerBirthday'), true);
 }
 
 $(document).ready(function(){
 	
-	setDatePickerEndDate($('#datetimepickerFoundingDay'));
-	setDatePickerEndDate($('#datetimepickerBirthday'));
+	setDatePickerEndDate($('#datetimepickerFoundingDay'), true);
+	setDatePickerEndDate($('#datetimepickerBirthday'), true);
+	if ($('#interestSelect').length) {
+		$('#interestSelect').multiselect({
+			maxHeight: 200,
+			includeSelectAllOption: true
+		});
+	}
 	
 	///////////////////CREATE ACCOUNT////////////////////////
 	
@@ -53,7 +59,7 @@ $(document).ready(function(){
 		// check day
 		$(".mydatetime").each(function(){
 			var hiddenParent = $(this).parents(".hidden");
-			if (hiddenParent == null) {
+			if (hiddenParent != null) {
 				// not check datetime in hidden region
 				result = true;
 				return;
@@ -80,7 +86,7 @@ $(document).ready(function(){
 				$("#toast").fadeIn();
 				setTimeout(function(){
 				       $("#toast").fadeOut(function(){
-				    	   window.location.assign(document.location.host + "/mcps/admin/account/create");
+				    	   window.location.assign(window.location);
 				       });
 				},1000);
 			} else {
@@ -145,7 +151,7 @@ $(document).ready(function(){
 	// click delete account
 	$("#listAccountDiv").on("click", ".delete-anchor", function(){
 		var accountId = $(this).parent().siblings("td.id-account").text();
-		$.post("delete", {id : accountId}, function(msg) {
+		$.post(window.location + "/delete", {id : accountId}, function(msg) {
 			if ("success" == msg) {
 				$("#toast").contents()[2].nodeValue = "delete success";
 				$("#toast").fadeIn();

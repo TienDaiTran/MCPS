@@ -14,7 +14,7 @@ $(document).ready(function(){
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
     CKEDITOR.replace('editor1');
-    setDatePickerStartDate($("#datetimepickerPublishDay"), true);
+    setDatePickerStartDate($("#datetimepickerPublishDay"), false);
 	
 	$("#bannerInputFile").change(function(){
     	readURL(this);
@@ -58,13 +58,13 @@ $(document).ready(function(){
 	        success: function(msg)
 	        {
 	        	if ("success" == msg) {
-					$("#toast").contents()[2].nodeValue = "Tạo chiến dịch thành công";
+					$("#toast").contents()[2].nodeValue = "Chỉnh sửa chiến dịch thành công";
 					$("#toast").fadeIn();
 					setTimeout(function(){
 					       $("#toast").fadeOut();
 					},1000);
 				} else {
-					$("#toast").contents()[2].nodeValue = "Tạo chiến dịch thất bại";
+					$("#toast").contents()[2].nodeValue = "Chỉnh sửa chiến dịch thất bại";
 					$("#toast").fadeIn();
 					setTimeout(function(){
 					       $("#toast").fadeOut();

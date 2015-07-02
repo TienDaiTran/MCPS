@@ -1,6 +1,6 @@
 package com.dd.mcps.entities;
 
-// Generated Jun 18, 2015 6:31:16 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 1, 2015 2:40:35 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -25,17 +27,18 @@ import javax.persistence.TemporalType;
 @Table(name = "mcps_campaign", catalog = "mcps")
 public class McpsCampaign implements java.io.Serializable {
 
-	private long id;
+	private Long id;
 	private McpsAccount mcpsAccount;
 	private String campaignName;
 	private String bannerImage;
 	private String video;
 	private String description;
 	private long prototypeQuantity;
-	private byte recuitReviewerTime;
-	private byte reviewTime;
+	private short recuitReviewerTime;
+	private short reviewTime;
 	private String state;
 	private Date initiateDate;
+	private Date publishDate;
 	private Set<McpsCampaignAccount> mcpsCampaignAccounts = new HashSet<McpsCampaignAccount>(
 			0);
 	private Set<McpsInterest> mcpsInterests = new HashSet<McpsInterest>(0);
@@ -43,11 +46,10 @@ public class McpsCampaign implements java.io.Serializable {
 	public McpsCampaign() {
 	}
 
-	public McpsCampaign(long id, McpsAccount mcpsAccount, String campaignName,
+	public McpsCampaign(McpsAccount mcpsAccount, String campaignName,
 			String bannerImage, long prototypeQuantity,
-			byte recuitReviewerTime, byte reviewTime, String state,
-			Date initiateDate) {
-		this.id = id;
+			short recuitReviewerTime, short reviewTime, String state,
+			Date initiateDate, Date publishDate) {
 		this.mcpsAccount = mcpsAccount;
 		this.campaignName = campaignName;
 		this.bannerImage = bannerImage;
@@ -56,15 +58,15 @@ public class McpsCampaign implements java.io.Serializable {
 		this.reviewTime = reviewTime;
 		this.state = state;
 		this.initiateDate = initiateDate;
+		this.publishDate = publishDate;
 	}
 
-	public McpsCampaign(long id, McpsAccount mcpsAccount, String campaignName,
+	public McpsCampaign(McpsAccount mcpsAccount, String campaignName,
 			String bannerImage, String video, String description,
-			long prototypeQuantity, byte recuitReviewerTime, byte reviewTime,
-			String state, Date initiateDate,
+			long prototypeQuantity, short recuitReviewerTime, short reviewTime,
+			String state, Date initiateDate, Date publishDate,
 			Set<McpsCampaignAccount> mcpsCampaignAccounts,
 			Set<McpsInterest> mcpsInterests) {
-		this.id = id;
 		this.mcpsAccount = mcpsAccount;
 		this.campaignName = campaignName;
 		this.bannerImage = bannerImage;
@@ -75,17 +77,19 @@ public class McpsCampaign implements java.io.Serializable {
 		this.reviewTime = reviewTime;
 		this.state = state;
 		this.initiateDate = initiateDate;
+		this.publishDate = publishDate;
 		this.mcpsCampaignAccounts = mcpsCampaignAccounts;
 		this.mcpsInterests = mcpsInterests;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -126,7 +130,7 @@ public class McpsCampaign implements java.io.Serializable {
 		this.video = video;
 	}
 
-	@Column(name = "Description", length = 2000)
+	@Column(name = "Description", length = 5000)
 	public String getDescription() {
 		return this.description;
 	}
@@ -145,20 +149,20 @@ public class McpsCampaign implements java.io.Serializable {
 	}
 
 	@Column(name = "RecuitReviewerTime", nullable = false)
-	public byte getRecuitReviewerTime() {
+	public short getRecuitReviewerTime() {
 		return this.recuitReviewerTime;
 	}
 
-	public void setRecuitReviewerTime(byte recuitReviewerTime) {
+	public void setRecuitReviewerTime(short recuitReviewerTime) {
 		this.recuitReviewerTime = recuitReviewerTime;
 	}
 
 	@Column(name = "ReviewTime", nullable = false)
-	public byte getReviewTime() {
+	public short getReviewTime() {
 		return this.reviewTime;
 	}
 
-	public void setReviewTime(byte reviewTime) {
+	public void setReviewTime(short reviewTime) {
 		this.reviewTime = reviewTime;
 	}
 
@@ -179,6 +183,16 @@ public class McpsCampaign implements java.io.Serializable {
 
 	public void setInitiateDate(Date initiateDate) {
 		this.initiateDate = initiateDate;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "PublishDate", nullable = false, length = 10)
+	public Date getPublishDate() {
+		return this.publishDate;
+	}
+
+	public void setPublishDate(Date publishDate) {
+		this.publishDate = publishDate;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mcpsCampaign")

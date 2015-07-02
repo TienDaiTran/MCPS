@@ -4,6 +4,7 @@ import java.beans.PropertyEditorSupport;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -27,14 +28,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dd.mcps.HomeController;
 import com.dd.mcps.entities.McpsAccount;
 import com.dd.mcps.entities.McpsGender;
+import com.dd.mcps.entities.McpsInterest;
 import com.dd.mcps.entities.McpsPartneraccount;
 import com.dd.mcps.entities.McpsRevieweraccount;
 import com.dd.mcps.entities.McpsRole;
 import com.dd.mcps.general_user_funcs.services.LoginService;
 import com.dd.mcps.services.ManageAccountService;
+import com.dd.mcps.site.controller.HomeController;
 import com.dd.mcps.util.HibernateUtil;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
@@ -53,6 +55,7 @@ public class AccountManagementController {
 		model.addAttribute("content", "admin/partition/account-management");
 		model.addAttribute("roles", manageAccountService.getAllRoles());
 		model.addAttribute("accounts", manageAccountService.getAllAccounts());
+		model.addAttribute("sidebarId", 1);
 		
 		return "admin/admin-home-page";
 	}
@@ -89,12 +92,13 @@ public class AccountManagementController {
 		model.addAttribute("roles", manageAccountService.getAllRoles());
 		model.addAttribute("accounts", accounts);
 		return "admin/partition/account-management :: listAccount";
-		//return "admin/admin-home-page";
 	}
 	
 	@RequestMapping(value = "/admin/account", method = RequestMethod.POST, 
 			params = {"id", "block"})
 	public @ResponseBody String blockAccount(@RequestParam(value = "id") String idString, @RequestParam(value = "block") String block, Model model) {
+		logger.info("Block account" + idString);
+		
 		boolean isBlock = false;
 		if ("true".equals(block)) {
 			isBlock = true;
@@ -113,6 +117,8 @@ public class AccountManagementController {
 	@RequestMapping(value = "/admin/account/delete", method = RequestMethod.POST, 
 			params = {"id"})
 	public @ResponseBody String deleteAccount(@RequestParam(value = "id") String idString, Model model) {
+		logger.info("Block account" + idString);
+		
 		String result = "";
 		try {
 			Long id = Long.parseLong(idString);
@@ -126,6 +132,7 @@ public class AccountManagementController {
 	
 	@RequestMapping(value = "/admin/account/create", method = RequestMethod.GET)
 	public String createAccountPage(Model model) {
+		logger.info("Redirect to create account page");
 		
 		McpsRole role = new McpsRole();
 		McpsGender gender = new McpsGender();
@@ -140,13 +147,16 @@ public class AccountManagementController {
 		model.addAttribute("roles", manageAccountService.getAllRoles());
 		model.addAttribute("genders", manageAccountService.getGenders());
 		model.addAttribute("occupations", manageAccountService.getOccupations());
+		model.addAttribute("interests", manageAccountService.getAllInterests());
 		model.addAttribute("newAccount", newAccount);
+		model.addAttribute("sidebarId", 1);
 		
 		return "admin/admin-home-page";
 	}
 	
 	@RequestMapping(value = "/admin/account/create", method = RequestMethod.POST)
 	public @ResponseBody String createAccount(Model model, @ModelAttribute("newAccount") McpsAccount newAccount, BindingResult result) {
+		logger.info("Create new account");
 		
 		String success = "unsuccess";
 		newAccount.setState("active");
@@ -167,6 +177,7 @@ public class AccountManagementController {
 	@RequestMapping(value = "/admin/account/edit", method = RequestMethod.GET,
 			params = {"id"})
 	public String editAccountPage(@RequestParam(value = "id") String idString, Model model) {
+		logger.info("Redirect to editing account page");
 		
 		long id = 0;
 		if (idString != "") {
@@ -175,19 +186,32 @@ public class AccountManagementController {
 				McpsAccount editAccount = manageAccountService.getAccount(id);
 				model.addAttribute("content", "admin/partition/edit-account");
 				model.addAttribute("roles", manageAccountService.getAllRoles());
-				model.addAttribute("genders", manageAccountService.getGenders());
-				model.addAttribute("occupations", manageAccountService.getOccupations());
 				model.addAttribute("editAccount", editAccount);
+				// attributes only for reviewer
+				if (editAccount.getMcpsRole().getId() == 3) {
+					model.addAttribute("genders", manageAccountService.getGenders());
+					model.addAttribute("occupations", manageAccountService.getOccupations());
+					model.addAttribute("interests", manageAccountService.getAllInterests());
+					
+					// make selected interest list
+					List<Short> selectedInterests = new ArrayList<Short>();
+					for (McpsInterest interest : editAccount.getMcpsRevieweraccount().getMcpsInterests()) {
+						selectedInterests.add(interest.getId());
+					}
+					model.addAttribute("selectedInterests", selectedInterests);
+				}
 			} catch (NumberFormatException e) {
 				// bo qua
 			}
 		}
+		model.addAttribute("sidebarId", 1);
 		
 		return "admin/admin-home-page";
 	}
 	
 	@RequestMapping(value = "/admin/account/edit", method = RequestMethod.POST)
 	public @ResponseBody String editAccount(@ModelAttribute("editAccount") McpsAccount editAccount, Model model) {
+		logger.info("Edit account");
 		
 		String success = "unsuccess";
 		if (manageAccountService.updateAccountInfo(editAccount)) {	
@@ -211,4 +235,18 @@ public class AccountManagementController {
 	        }
 	    });
 	}
+	
+	@InitBinder
+    protected void initBinder(final WebDataBinder binder) {
+        binder.registerCustomEditor(McpsInterest.class, new InterestPropertyEditor ());
+    }
+
+    private static class InterestPropertyEditor extends PropertyEditorSupport {
+        @Override
+        public void setAsText(String interestId) {
+            final McpsInterest interest = new McpsInterest();
+            interest.setId(Short.parseShort(interestId));
+            setValue(interest);
+        }
+    }
 }
