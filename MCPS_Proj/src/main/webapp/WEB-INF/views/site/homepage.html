@@ -26,7 +26,7 @@
                 <a class="navbar-brand" href="#">Khảo Sát</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<!--             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="#">Về Chúng Tôi</a>
@@ -53,10 +53,37 @@
             		<div th:replace="site/partition/user-info-region :: user-region">
             		</div>
             	</div>
+            </div> -->
+			
+			<div th:if="${session.role == null}" style="float: right;margin-top: 1px;">
+                    <div class="nav navbar-nav">
+                        <ul class="nav navbar-nav" id="buttons">
+                            <li><span><a th:href="@{/register}">Đăng ký</a></span>
+                            </li>
+                            <li>
+                            <span><a id="toggle-login">Đăng nhập</a></span>
+                            </li>
+                        </ul>
+                        <div id="login" style="display: none;">
+                          <div id="triangle"></div>
+                          <h1>Đăng nhập</h1>
+                          <form class="form-inline" th:method="POST" th:action="@{/login}">
+                            <input id="inputEmail" name="email" tabindex="4" title="Email" type="email" size="10" placeholder="Thành Viên" autocomplete="off" required="required"/>
+                            <input id="inputPassword" name="pass" tabindex="4" title="Email" type="password" size="10" placeholder="Mật Khẩu" autocomplete="off" required="required"/>
+                            <div>
+                                <input id="checkbox-remember" type="checkbox"></input>
+                                <label for="checkbox-remember">Ghi nhớ</label>
+                            </div>
+                            <input id="btnLogin" value="Đăng Nhập" type="submit"/>
+                            <a>Quên mật khẩu</a>
+                        </form>
+                    </div>
+                </div>
             </div>
-			
-			
-            <!-- /.navbar-collapse -->
+            
+            <div th:if="${session.role != null}">
+            	<div th:replace="site/partition/user-info-region :: user-region"></div>
+           	</div>
         </div>
         <!-- /.container -->
     </nav>

@@ -5,8 +5,10 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -107,6 +109,38 @@ public class HomeController {
 		}
 		
 		return success;
+	}
+	
+	/**
+	 * Edit user info controller
+	 */
+	@RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+	public String userInfo(Model model, HttpSession session) {
+		
+		Object userIdObj = session.getAttribute("userid");
+		if(userIdObj != null){
+			Long userId = (Long)userIdObj;
+			McpsAccount account = manageAccountService.getAccount(userId);
+				McpsAccount editAccount = manageAccountService.getAccount(userId);
+				model.addAttribute("content", "site/partition/edit-user-info");
+				model.addAttribute("roles", manageAccountService.getAllRoles());
+				model.addAttribute("editAccount", editAccount);
+				// attributes only for reviewer
+				if (editAccount.getMcpsRole().getId() == 3) {
+					model.addAttribute("genders", manageAccountService.getGenders());
+					model.addAttribute("occupations", manageAccountService.getOccupations());
+					model.addAttribute("interests", manageAccountService.getAllInterests());
+					
+					// make selected interest list
+					List<Short> selectedInterests = new ArrayList<Short>();
+					for (McpsInterest interest : editAccount.getMcpsRevieweraccount().getMcpsInterests()) {
+						selectedInterests.add(interest.getId());
+					}
+					model.addAttribute("selectedInterests", selectedInterests);
+				}
+		}
+		
+		return "site/homepage";
 	}
 	
 	@InitBinder

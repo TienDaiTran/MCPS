@@ -1,5 +1,9 @@
 $(document).ready(function() {
 	
+	$('#toggle-login').click(function(){
+		  $('#login').toggle();
+	});
+	
 	$("#inputEmail").focus(function() {
 		$("#message").html("");
 	});

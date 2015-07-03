@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+
+<body>
+
+    <!-- Page Content -->
+<div th:fragment="body" class="container">
+
+          <div class="panel widget light-widget">
+            <div class="panel-heading no-title"> </div>
+            <form class="form-horizontal" id="accountInfoForm" method="POST" th:action="@{/admin/account/edit}" th:object="${editAccount}">
+              <div class="panel-body">
+                <h2 class="mgbt-xs-20"> Chỉnh sửa thông tin </h2>
+                <br></br>
+                <div class="row">
+                  <div class="col-sm-3 mgbt-xs-20">
+                    <div class="form-group">
+                      <div class="col-xs-12">
+                        <div class="form-img text-center mgbt-xs-15"> <img alt="example image" src="img/big.jpg"></img> </div>
+                        <div class="form-img-action text-center mgbt-xs-20"> <a class="btn btn-primary" href="javascript:void(0);"><i class="fa fa-cloud-upload append-icon"></i> Upload</a> </div>
+                        <br></br>
+                        <div>
+                          <table class="table table-striped table-hover">
+                            <tbody>
+                              <tr>
+                                <td style="width:60%;">Status</td>
+                                <td><span class="label label-success">Active</span></td>
+                              </tr>
+                              <tr>
+                                <td>User Rating</td>
+                                <td><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i></td>
+                              </tr>
+                              <tr>
+                                <td>Member Since</td>
+                                <td> Jan 07, 2014 </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-9">
+                    <h3 class="mgbt-xs-15">Account Setting</h3>
+
+                    <div id="mainInfo">
+                      <div class="form-group">
+                        <label for="inputEmail" class="col-sm-3 control-label">Email*</label>
+                        <div class="col-sm-5">
+                          <input type="email" class="form-control" id="inputEmail" placeholder="Email" th:field="*{email}" readonly="readonly"/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputPassword" class="col-sm-3 control-label">Password*</label>
+                        <div class="col-sm-5">
+                          <input type="password"  class="form-control" id="inputPassword" name="pass" placeholder="Để trống nếu giữ nguyên password" th:field="*{pass}" pattern=".{8,}"/>
+                        </div>
+                        <label class="control-label">(Tối thiểu 8 ký tự)</label>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputRetypePassword" class="col-sm-3 control-label">Re-type Password*</label>
+                        <div class="col-sm-5">
+                          <input type="password" class="form-control" id="inputRetypePassword" placeholder="Để trống nếu giữ nguyên password"/>
+                        </div>
+                        <label id="passwordMatchLabel" class="control-label has-error hidden"><i class="fa fa-check"></i> Ok</label>
+                        <label id="passwordNotMatchLabel" class="control-label has-error hidden"><i class="fa fa-times-circle-o"></i> Mật khẩu không trùng khớp</label>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Vai trò</label>
+                        <input type="text" class="form-control" id="inputRole" placeholder="vai trò" th:value="*{mcpsRole.roleName}" readonly="readonly"/>
+                        <div class="dropdown col-sm-5">
+                          <button name="1" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">Partner</button>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a class="" role="menuitem" tabindex="-1" name="1">Admin</a></li>
+                            <li role="presentation"><a class="selected" role="menuitem" tabindex="-1" name="2">Partner</a></li>
+                            <li role="presentation"><a class="" role="menuitem" tabindex="-1" name="3">Reviewer</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputDisplayName" class="col-sm-3 control-label">Display Name*</label>
+                        <div class="col-sm-5">
+                          <input type="text" class="form-control" id="inputDisplayName" placeholder="Display Name" th:field="*{displayName}" required="required"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr></hr>
+                    <h3 class="mgbt-xs-15">Profile Setting</h3>
+                    
+                    <!-- detail infor -->
+				<div id="detailInfoDiv">
+					<!-- partner info begin -->
+                <div id="partnerInfo" th:if="${editAccount.mcpsRole.id == 2}">
+                <div class="region">
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-3 control-label">Tên doanh nghiệp*</label>
+                      <div class="col-sm-5">
+                        <input type="text" class="form-control" id="inputName" placeholder="Nguyễn Văn A" th:field="*{mcpsPartneraccount.partnerName}" required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputBirthDay" class="col-sm-3 control-label">Địa chỉ*</label>
+                      <div class="col-sm-5">
+                        <input type="text" class="form-control" placeholder="Số 8 Hoàng Văn Thụ, Phú Nhuận, Hồ Chí Minh" th:field="*{mcpsPartneraccount.address}"  required="required"/>
+                      </div>
+                    </div>
+
+                    <!-- date picker-->
+                    <div class="form-group">
+                      <label for="inputFoundingDay" class="col-sm-3 control-label">Ngày thành lập</label>
+                      <div class="col-sm-5">
+                      <div class='input-group date datepicker' id='datetimepickerFoundingDay'>
+                          <input type='text' id="inputFoundingDay" class="form-control mydatetime" th:value="*{#dates.format(mcpsPartneraccount.foundingDate,'dd/MM/yyyy')}" th:name="mcpsPartneraccount.foundingDate" readonly="readonly"/>
+                          <span class="input-group-addon">
+                            <span class="fa fa-calendar">
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                      <label id="birthdayNotReal" class="control-label has-error hidden"><i class="fa fa-times-circle-o"></i> Ngày thành lập không hợp lệ</label>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="inputTel" class="col-sm-3 control-label">Số điện thoại*</label>
+                      <div class="col-sm-5">
+                        <input type="tel" class="form-control" id="inputTel" placeholder="0906924379" th:field="*{mcpsPartneraccount.tel}" required="required"/>
+                      </div>
+                    </div>
+
+                  <div class="form-group">
+                    <label for="inputAddress" class="col-sm-3 control-label">Website</label>
+                    <div class="col-sm-5">
+                      <input type="text" class="form-control" id="inputAddress" placeholder="Ktx DHQG, Linh Trung, Thu Duc" th:field="*{mcpsPartneraccount.website}"/>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <!-- partner infor close -->
+                
+                <!-- reviewer info begin -->
+                <div id="reviewerInfo" th:if="${editAccount.mcpsRole.id == 3}">
+                <div class="region">
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-3 control-label">Họ*</label>
+                    <div class="col-sm-5">
+                      <input type="text" class="form-control" id="inputName" placeholder="Nguyễn Văn A" th:field="*{mcpsRevieweraccount.lastName}" required="required"/>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-3 control-label">Tên*</label>
+                    <div class="col-sm-5">
+                      <input type="text" class="form-control" id="inputName" placeholder="Nguyễn Văn A" th:field="*{mcpsRevieweraccount.firstName}" required="required"/>
+                    </div>
+                  </div>
+
+                  <!-- date picker-->
+                  <div class="form-group">
+                    <label for="inputBirthDay" class="col-sm-3 control-label">Ngày sinh*</label>
+                    <div class="col-sm-5">
+                      <div class='input-group date datepicker' id="datetimepickerBirthday">
+                        <input type='text' class="form-control mydatetime" id='birthdayDatetimepicker' th:value="*{#dates.format(mcpsRevieweraccount.birthday,'dd/MM/yyyy')}" th:name="mcpsRevieweraccount.birthday" required="required" readonly="readonly"/>
+                        <span class="input-group-addon">
+                          <span class="fa fa-calendar">
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <label id="birthdayNotReal" class="control-label has-error hidden"><i class="fa fa-times-circle-o"></i> Ngày sinh không hợp lệ</label>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Giới tính*</label>
+                    <input type="hidden" class="form-control" id="inputGender" th:field="*{mcpsRevieweraccount.mcpsGender.id}"/>
+                    <div class="dropdown col-sm-5">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        Nam
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation" th:each="gender : ${genders}"><a role="menuitem" tabindex="-1" th:name="${gender.id}" th:text="${gender.genderName}">Action</a></li>
+                        <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1">Nữ</a></li>
+                        <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1">Khác</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Nghề nghiệp*</label>
+                    <input type="hidden" class="form-control" id="inputOccupation" value="1" th:field="*{mcpsRevieweraccount.mcpsOccupation.id}"/>
+                    <div class="dropdown col-sm-5">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        Nam
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation" th:each="occupation : ${occupations}"><a role="menuitem" tabindex="-1" th:name="${occupation.id}" th:text="${occupation.occupationName}">Action</a></li>
+                        <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1">Giáo viên</a></li>
+                        <li role="presentation" th:remove="all"><a role="menuitem" tabindex="-1">Học sinh</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputAddress" class="col-sm-3 control-label">Địa chỉ*</label>
+                    <div class="col-sm-5">
+                      <input type="text" class="form-control" id="inputAddress" placeholder="Ktx DHQG, Linh Trung, Thu Duc" th:field="*{mcpsRevieweraccount.address}" required="required"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputTel" class="col-sm-3 control-label">Số điện thoại</label>
+                    <div class="col-sm-5">
+                      <input type="tel" class="form-control" id="inputTel" placeholder="0906924379" th:field="*{mcpsRevieweraccount.tel}" required="required"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputTel" class="col-sm-3 control-label">Mối quan tâm</label>
+                    <div class="col-sm-5">
+                      <select id="interestSelect" class="form-control" th:name="mcpsRevieweraccount.mcpsInterests" multiple="multiple" >
+        				<option th:each="interest : ${interests}"
+        						th:selected="${selectedInterests.contains(interest.id)}"
+                				th:value="${{interest.id}}" 
+                				th:text="${interest.interestName}">                    
+        				</option>
+					  </select>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <!-- reviewer infor close -->
+				</div>
+                  
+                  <!-- col-sm-12 --> 
+                </div>
+                <!-- row --> 
+
+                <!-- panel-body -->
+                <div style="padding: auto 10px; text-align: center;" class="pd-20">
+                  <button class="btn btn-primary"><span class="menu-icon"><i class="fa fa-fw fa-check"></i></span> Finish</button>
+                </div>
+              
+            </div>
+            </div>
+            </form>
+
+          </div>
+          
+			<!-- Custom CSS -->
+  			<link th:href="@{/resources/css/site/edit-user-info.css}" rel="stylesheet" />
+          
+
+        
+</div>
+</body>
+
+</html>
