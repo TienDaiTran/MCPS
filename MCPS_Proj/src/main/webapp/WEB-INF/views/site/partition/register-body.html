@@ -1,27 +1,21 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8"/>
-<title>Insert title here</title>
 </head>
+
 <body>
-<div th:fragment="content">
+
+<div th:fragment="content" class="container">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Tạo tài khoản
-            <small>..</small>
+            Đăng ký tài khoản
           </h1>
-          <ol class="breadcrumb">
-            <li><a href="./././"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-            <li><a href="././">Quản lý tài khoản</a></li>
-            <li class="active">Tạo tài khoản</li>
-          </ol>
         </section>
         
 <!-- Main content -->
-        <section th:fragment="content" class="content">
+        <section class="content">
           <div id="toast" style="display:none">
 <img src="img/refresh.png"></img> 
 </div>
@@ -30,7 +24,7 @@ xmlns:th="http://www.thymeleaf.org">
             <!-- info form begin -->
             <div class="box">
             <div class="box-body">
-              <form id="accountInfoForm" class="form-horizontal" method="POST" th:action="@{/admin/account/create}" th:object="${newAccount}">
+              <form id="accountInfoForm" class="form-horizontal" method="POST" th:action="@{/register}" th:object="${newAccount}">
               <div id="mainInfo">
                 <div class="form-group">
                   <label for="inputEmail" class="col-sm-2 control-label">Email*</label>
@@ -39,9 +33,9 @@ xmlns:th="http://www.thymeleaf.org">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword" class="col-sm-2 control-label">Password*</label>
+                  <label for="inputNewPassword" class="col-sm-2 control-label">Password*</label>
                   <div class="col-sm-4">
-                    <input type="password" class="form-control" id="inputPassword" name="pass" placeholder="Password" th:field="*{pass}" pattern=".{8,}" required="required"/>
+                    <input type="password" class="form-control" id="inputNewPassword" name="pass" placeholder="Password" th:field="*{pass}" pattern=".{8,}" required="required"/>
                   </div>
                   <label class="control-label">(Tối thiểu 8 ký tự)</label>
                 </div>
@@ -55,7 +49,7 @@ xmlns:th="http://www.thymeleaf.org">
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Vai trò</label>
-                  <input type="hidden" class="form-control" id="inputRole" th:name="mcpsRole.id" th:value="1"/>
+                  <input type="hidden" class="form-control" id="inputRole" th:name="mcpsRole.id" th:value="2"/>
                   <div class="dropdown col-sm-4">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                       Admin
@@ -79,6 +73,51 @@ xmlns:th="http://www.thymeleaf.org">
 
 				<!-- detail infor -->
 				<div id="detailInfoDiv">
+				<div id="partnerInfo" th:object="${newAccount}">
+                <div class="region">
+                    <div class="form-group">
+                      <label for="inputName" class="col-sm-2 control-label">Tên doanh nghiệp*</label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputName" placeholder="Nguyễn Văn A" th:field="*{mcpsPartneraccount.partnerName}" required="required"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputBirthDay" class="col-sm-2 control-label">Địa chỉ*</label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Số 8 Hoàng Văn Thụ, Phú Nhuận, Hồ Chí Minh" th:field="*{mcpsPartneraccount.address}"  required="required"/>
+                      </div>
+                    </div>
+
+                    <!-- date picker-->
+                    <div class="form-group">
+                      <label for="inputFoundingDay" class="col-sm-2 control-label">Ngày thành lập</label>
+                      <div class="col-sm-4">
+                      <div class='input-group date datepicker' id='datetimepickerFoundingDay'>
+                          <input type='text' id="inputFoundingDay" class="form-control mydatetime" th:field="*{mcpsPartneraccount.foundingDate}" readonly="readonly"/>
+                          <span class="input-group-addon">
+                            <span class="fa fa-calendar">
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                      <label id="birthdayNotReal" class="control-label has-error hidden"><i class="fa fa-times-circle-o"></i> Ngày thành lập không hợp lệ</label>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="inputTel" class="col-sm-2 control-label">Số điện thoại*</label>
+                      <div class="col-sm-4">
+                        <input type="tel" class="form-control" id="inputTel" placeholder="0906924379" th:field="*{mcpsPartneraccount.tel}" required="required"/>
+                      </div>
+                    </div>
+
+                  <div class="form-group">
+                    <label for="inputAddress" class="col-sm-2 control-label">Website</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="inputAddress" placeholder="Ktx DHQG, Linh Trung, Thu Duc" th:field="*{mcpsPartneraccount.website}"/>
+                    </div>
+                  </div>
+                </div>
+                </div>
 				</div>
 
                 <div class="form-group">
@@ -232,9 +271,18 @@ xmlns:th="http://www.thymeleaf.org">
           </div>
           <!-- Your Page Content Here -->
         </section><!-- /.content -->
+        <link th:href="@{/resources/dist/css/AdminLTE.min.css}" href="/resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+        <link type="text/css" rel="stylesheet" th:href="@{/resources/plugins/datepicker/datepicker3.css}" href="/resources/plugins/datepicker/datepicker3.css"/>
         <link th:href="@{/resources/plugins/multiselect/bootstrap-multiselect.css}" href="/resources/plugins/multiselect/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
+        <link type="text/css" rel="stylesheet" th:href="@{/resources/css/admin/toast.css}" href="/resources/css/admin/toast.css"/>
+        <link type="text/css" rel="stylesheet" th:href="@{/resources/css/site/register.css}" href="/resources/css/site/register.css"/>
+                
         <script th:src="@{/resources/plugins/multiselect/bootstrap-multiselect.js}" src="/resources/plugins/multiselect/bootstrap-multiselect.js" type="text/javascript"></script>
-        <script th:src="@{/resources/scripts/admin/adminaccountmanagement.js}" src="/resources/scripts/admin/adminaccountmanagement.js" type="text/javascript"></script>
+        <script type="text/javascript" th:src="@{/resources/plugins/datepicker/moment.js}" src="/resources/plugins/datepicker/moment.js"></script>
+        <script type="text/javascript" th:src="@{/resources/plugins/datepicker/bootstrap-datepicker.js}" src="/resources/plugins/datepicker/bootstrap-datepicker.js"></script>
+        <script th:src="@{/resources/scripts/admin/util.js}" src="/resources/scripts/admin/util.js" type="text/javascript"></script>
+        <script type="text/javascript" th:src="@{/resources/scripts/site/register.js}" src="/resources/scripts/register.js"></script>
         </div>
 </body>
+
 </html>

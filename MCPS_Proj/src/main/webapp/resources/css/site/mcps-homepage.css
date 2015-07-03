@@ -8,6 +8,19 @@ body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
+a {
+	cursor: pointer;
+}
+
+section {
+	z-index: 0;
+}
+
+.small-input {
+	height: 26px;
+	line-height: 0.429;	
+}
+
 .slide-image {
     width: 100%;
 }
@@ -22,7 +35,7 @@ body {
 }
 
 .caption {
-    height: 130px;
+    height: 165px;
     overflow: hidden;
 }
 
@@ -68,5 +81,5 @@ footer {
     margin-right: auto;
     margin-top: 0;
     width: 1000px;
-    z-index: 3000;
+    z-index: 0;
 }

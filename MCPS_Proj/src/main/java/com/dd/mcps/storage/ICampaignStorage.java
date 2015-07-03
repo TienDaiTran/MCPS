@@ -43,6 +43,12 @@ public interface ICampaignStorage {
 	public List<McpsCampaign> getAll();
 	
 	/**
+	 * retrieve campaigns by creator
+	 * @return campaigns
+	 */
+	public List<McpsCampaign> getCampaignByCreatorID(Long creatorID);
+	
+	/**
 	 * retrieve all categories in system
 	 * @return list of categories
 	 */
