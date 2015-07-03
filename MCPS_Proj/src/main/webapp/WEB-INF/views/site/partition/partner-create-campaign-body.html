@@ -1,23 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8"/>
-<title>Insert title here</title>
 </head>
+
 <body>
-<div th:fragment="content">
+<div th:fragment="content" class="container">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-            Tạo chiến dịch
-            <small>..</small>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="./././"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-            <li><a href="././">Quản lý chiến dịch</a></li>
-            <li class="active">Tạo chiến dịch</li>
-          </ol>
+        <section class="content-header container">
+        	<h3>Tạo chiến dịch</h3>
         </section>
         
 <!-- Main content -->
@@ -25,7 +16,7 @@ xmlns:th="http://www.thymeleaf.org">
           <div id="toast" style="display:none">
 <img src="img/refresh.png"></img> 
 </div>
-          <form id="campaignInfoForm" class="form-horizontal" th:action="@{/admin/campaign/create}" method="POST" enctype="multipart/form-data">
+          <form id="campaignInfoForm" class="form-horizontal" th:action="@{/management/campaign/create}" method="POST" enctype="multipart/form-data">
             <div class="row">
               <div class="col-xs-12">
                 <!-- Image box begin -->
@@ -157,7 +148,16 @@ xmlns:th="http://www.thymeleaf.org">
           </form>
           <!-- Your Page Content Here -->
         </section><!-- /.content -->
-        <script th:src="@{/resources/scripts/admin/admin-create-campaign.js}" src="/resources/scripts/admin/admin-create-campaign.js" type="text/javascript"></script>
+        <link th:href="@{/resources/dist/css/AdminLTE.min.css}" href="/resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+        <link type="text/css" rel="stylesheet" th:href="@{/resources/plugins/datepicker/datepicker3.css}" href="/resources/plugins/datepicker/datepicker3.css"/>
+        <link type="text/css" rel="stylesheet" th:href="@{/resources/css/admin/toast.css}" href="/resources/css/admin/toast.css"/>
+        <script type="text/javascript" th:src="@{/resources/plugins/datepicker/moment.js}" src="/resources/plugins/datepicker/moment.js"></script>
+        <script type="text/javascript" th:src="@{/resources/plugins/datepicker/bootstrap-datepicker.js}" src="/resources/plugins/datepicker/bootstrap-datepicker.js"></script>
+            <!-- CK Editor -->
+    	<script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
+        <script th:src="@{/resources/scripts/admin/util.js}" src="/resources/scripts/admin/util.js" type="text/javascript"></script>
+        <script th:src="@{/resources/scripts/site/site-create-campaign.js}" src="/resources/scripts/site/site-create-campaign.js" type="text/javascript"></script>
         </div>
 </body>
+
 </html>

@@ -80,6 +80,25 @@ public class CampaignStorage implements ICampaignStorage {
 		session.close();
 		return campaigns;
 	}
+	
+	@Override
+	public List<McpsCampaign> getCampaignByCreatorID(Long creatorID) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from McpsCampaign cam where cam.mcpsAccount.id = :creatorID");
+		query.setParameter("creatorID", creatorID);
+		List<McpsCampaign> campaigns = query.list();
+		for (McpsCampaign camp : campaigns) {
+			Hibernate.initialize(camp.getMcpsAccount());
+			Hibernate.initialize(camp.getMcpsAccount().getMcpsPartneraccount());
+			Hibernate.initialize(camp.getMcpsInterests());
+			Hibernate.initialize(camp.getMcpsCampaignAccounts());
+		}
+		tx.commit();
+		session.close();
+		return campaigns;
+	}
 
 	@Override
 	public List<McpsInterest> getAllCategories() {

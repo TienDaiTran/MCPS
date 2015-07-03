@@ -30,7 +30,7 @@ $(document).ready(function(){
 	$("#inputRetypePassword").change(function(){
 		hide($("#passwordMatchLabel"));
 		hide($("#passwordNotMatchLabel"));
-		var password = $("#inputPassword").val();
+		var password = $("#inputNewPassword").val();
 		var retypePassword = $("#inputRetypePassword").val();
 		if (password != retypePassword) {
 			show($("#passwordNotMatchLabel"));
@@ -39,10 +39,10 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#inputPassword").change(function(){
+	$("#inputNewPassword").change(function(){
 		hide($("#passwordMatchLabel"));
 		hide($("#passwordNotMatchLabel"));
-		var password = $("#inputPassword").val();
+		var password = $("#inputNewPassword").val();
 		var retypePassword = $("#inputRetypePassword").val();
 		if (password != retypePassword) {
 			show($("#passwordNotMatchLabel"));
@@ -77,7 +77,7 @@ $(document).ready(function(){
 			}
 		});
 		// check match password
-		var password = $("#inputPassword").val();
+		var password = $("#inputNewPassword").val();
 		var retypePassword = $("#inputRetypePassword").val();
 		if (password != retypePassword) {
 			result = false;
@@ -104,66 +104,4 @@ $(document).ready(function(){
 		return false;
 	  });
 	/////////////////////////////////////////////////////////
-	
-	
-	// click search button funtion
-	$("#btnSearch").click(function(){
-		var accountId = $("#inputID").val();
-		var email = $("#inputEmail").val();
-		var roleId = $("#inputRole").val();
-		$.post(window.location, {id : accountId, email : email, role : roleId}, function(msg, status) {
-			if ("success" == status) {
-				$("#listAccountDiv").html(msg);
-				$("#example1").dataTable();
-			}
-		});
-	});
-	
-	// click block account
-	$("#listAccountDiv").on("click", ".block-anchor", function(){
-		var accountId = $(this).parent().siblings("td.id-account").text();
-		$.post(window.location, {id : accountId, block : "true"}, function(msg) {
-			if ("success" == msg) {
-				$("#toast").contents()[2].nodeValue = "block success";
-				$("#toast").fadeIn();
-				setTimeout(function(){
-				       $("#toast").fadeOut(function(){
-				    	   window.location.assign(window.location);
-				       });
-				},1000);
-			}
-		});
-	});
-	
-	// click unblock account
-	$("#listAccountDiv").on("click", ".unblock-anchor", function(){
-		var accountId = $(this).parent().siblings("td.id-account").text();
-		$.post(window.location, {id : accountId, block : "false"}, function(msg) {
-			if ("success" == msg) {
-				$("#toast").contents()[2].nodeValue = "unblock success";
-				$("#toast").fadeIn();
-				setTimeout(function(){
-				       $("#toast").fadeOut(function(){
-				    	   window.location.assign(window.location);
-				       });
-				},1000);
-			}
-		});
-	});
-	
-	// click delete account
-	$("#listAccountDiv").on("click", ".delete-anchor", function(){
-		var accountId = $(this).parent().siblings("td.id-account").text();
-		$.post(window.location + "/delete", {id : accountId}, function(msg) {
-			if ("success" == msg) {
-				$("#toast").contents()[2].nodeValue = "delete success";
-				$("#toast").fadeIn();
-				setTimeout(function(){
-				       $("#toast").fadeOut(function(){
-				    	   window.location.assign(window.location);
-				       });
-				},1000);
-			}
-		});
-	});
 });

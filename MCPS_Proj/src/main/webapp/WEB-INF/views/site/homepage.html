@@ -35,14 +35,18 @@
 				
 				<div th:if="${session.role == null}" class="right">
 					<div class="nav navbar-nav" >
-					<form th:method="POST" th:action="@{/login}">
-				  		<div class="login">
-							<input class="user-name" id="inputEmail" name="email" tabindex="4" title="Email" type="email" size="10" placeholder="Thành Viên" autocomplete="off" required="required"/>
-							<input class="password" id="inputPassword" name="pass" tabindex="4" title="Email" type="password" size="10" placeholder="Mật Khẩu" autocomplete="off" required="required"/>
-							<input id="btnLogin1" value="Đăng Nhập" type="submit"/>
-                    		<span class="login-progress"></span>
+							<form class="form-inline" th:method="POST" th:action="@{/login}">
+				  				<div class="login">
+									<input class="user-name form-control small-input" id="inputEmail" name="email" tabindex="4" title="Email" type="email" size="10" placeholder="Thành Viên" autocomplete="off" required="required"/>
+									<input class="password form-control small-input" id="inputPassword" name="pass" tabindex="4" title="Email" type="password" size="10" placeholder="Mật Khẩu" autocomplete="off" required="required"/>
+									<input id="btnLogin1" class="btn btn-primary small-input" value="Đăng Nhập" type="submit"/>
+                    				<span class="login-progress"></span>
+								</div>
+							</form>
+						<div class="row" style="padding-left: 14px;">
+							<a>Quên mật khẩu?</a>
+							<a th:href="@{/register}">Đăng ký</a>
 						</div>
-						</form>
 					</div>
             	</div>
             	<div th:if="${session.role != null}">
@@ -58,8 +62,10 @@
     </nav>
 
     <!-- Page Content -->
+    <div style="min-height: 400px;">
     <div class="container" th:replace="${content} :: body">
 
+    </div>
     </div>
     <!-- /.container -->
 

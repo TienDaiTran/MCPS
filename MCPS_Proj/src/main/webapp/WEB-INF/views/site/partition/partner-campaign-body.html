@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+
+<body>
+
+	<div th:fragment="body">
+	          <div id="toast" style="display:none">
+<img src="img/refresh.png"></img> 
+</div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="margin-top: 40px; background-color: white; z-index: 100;">
+        <div class="container">
+                <!-- Title -->
+       		<div class="row">
+            	<div class="col-lg-11">
+                	<h3>Danh Sách Chiến Dịch Của Bạn</h3>
+            	</div>
+            	<div class="col-lg-1" style="padding: 10px 0px;">
+                	<a data-action="click-trigger" th:href="@{/management/campaign?q=create}" href="javascript:void(0);" class="mega-link vd_bg-red" style="width: 50px; height: 50px; line-height: 50px;">
+                    	<span class="mega-icon">
+                        	<i class="fa fa-plus"></i>
+                    	</span>
+                	</a>
+            	</div>
+        	</div>
+        <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+        <!-- Page Content -->
+    <div class="container" style="margin-top: 50px;">
+
+        <!-- Page Features -->
+        <div class="row text-center">
+
+            <div th:each="campaign : ${campaigns}" class="col-md-4 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img th:src="@{${campaign.bannerImage}}" alt=""/>
+                    <div class="caption">
+                    	<input type="hidden" class="id-campaign" th:value="${campaign.id}"/>
+                        <h3 th:text="${campaign.campaignName}">Feature Label</h3>
+                        <p style="text-align: left"><b>Trạng thái: </b><i th:text="${campaign.state}"></i></p>
+                        <p style="text-align: left"><b>Ngày công bố: </b><i th:text="${#dates.format(campaign.publishDate,'dd/MM/yyyy')}"></i></p>
+                        <p>
+                            <a th:href="@{/management/campaign(q=edit, id=${campaign.id})}" href="#" class="btn btn-default">Edit</a> 
+							<a href="" class="btn btn-default">Publish</a>
+							<a href="" class="btn btn-default">Report</a>
+							<a href="" class="btn btn-default delete-anchor">Xóa</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
+        </div>
+        <link type="text/css" rel="stylesheet" th:href="@{/resources/css/admin/toast.css}" href="/resources/css/admin/toast.css"/>
+        <script th:src="@{/resources/scripts/site/site-campaign.js}" src="/resources/scripts/site/site-campaign.js" type="text/javascript"></script>
+        </div>
+        
+</body>
+
+</html>

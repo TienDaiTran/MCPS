@@ -1,5 +1,6 @@
 package com.dd.mcps.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dd.mcps.entities.McpsAccount;
@@ -79,6 +80,21 @@ public class ManageAccountService {
 	 */
 	public List<McpsRole> getAllRoles() {
 		return getAccountStorage().getAllRoles();
+	}
+	
+	/**
+	 * Get all roles of account in system
+	 * @return
+	 */
+	public List<McpsRole> getRolesButAdmin() {
+		List<McpsRole> allRoles = getAccountStorage().getAllRoles();
+		List<McpsRole> rolesButAdmin = new ArrayList<McpsRole>();
+		for (McpsRole role : allRoles) {
+			if (role.getId() != 1) {
+				rolesButAdmin.add(role);
+			}
+		}
+		return rolesButAdmin;
 	}
 	
 	/**

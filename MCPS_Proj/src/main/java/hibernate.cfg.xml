@@ -16,7 +16,6 @@
   <mapping class="com.dd.mcps.entities.McpsCampaignAccountId"/>
   <mapping class="com.dd.mcps.entities.McpsInterest"/>
   <mapping class="com.dd.mcps.entities.McpsOccupation"/>
-  <mapping class="com.dd.mcps.entities.McpsOption"/>
   <mapping class="com.dd.mcps.entities.McpsOptionId"/>
   <mapping class="com.dd.mcps.entities.McpsPartneraccount"/>
   <mapping class="com.dd.mcps.entities.McpsQuestiontype"/>
@@ -27,5 +26,6 @@
   <mapping class="com.dd.mcps.entities.McpsSurveyquestion"/>
   <mapping class="com.dd.mcps.entities.McpsRole"/>
   <mapping class="com.dd.mcps.entities.McpsGender"/>
+  <mapping class="com.dd.mcps.entities.McpsOption"/>
  </session-factory>
 </hibernate-configuration>

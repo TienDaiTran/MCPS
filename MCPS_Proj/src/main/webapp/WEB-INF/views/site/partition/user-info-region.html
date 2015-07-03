@@ -8,8 +8,23 @@
             <div th:fragment="user-region" class="right-user-info">
             <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+			  <li th:if="${session.role == 2}" class="dropdown user user-menu">
+                <a data-toggle="dropdown" class="btn dropdown-toggle" aria-expanded="false">
+                  <span th:if="${page == 1}" class="hidden-xs">Trang chủ</span>
+                  <span th:if="${page == 2}" class="hidden-xs">Quản lý</span>
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                        <a th:href="@{/}" href="#"><i class="fa fa-fw fa-user"></i> Trang chủ</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/management/campaign}" href="#"><i class="fa fa-fw fa-envelope"></i>Quản lý</a>
+                        </li>
+                </ul>
+              </li>
               <!-- Messages: style can be found in dropdown.less-->
-              <li class="dropdown messages-menu open">
+              <li class="dropdown messages-menu">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true">
                   <i class="fa fa-envelope-o"></i>
                   <span class="label label-success">4</span>
@@ -214,7 +229,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Thoát</a>
+                            <a th:href="@{/logout}" href="#"><i class="fa fa-fw fa-power-off"></i> Thoát</a>
                         </li>
                 </ul>
               </li>

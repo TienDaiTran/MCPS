@@ -36,7 +36,7 @@ public class LoginController {
 	private ManageAccountService manageAccountService;
 	
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Login controller
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(HttpSession session, HttpServletRequest request, final McpsAccount account, Model model) {
@@ -49,12 +49,26 @@ public class LoginController {
 			McpsAccount user = manageAccountService.getAccount(account.getEmail());
 			session.invalidate();
 			session = request.getSession();
+			session.setAttribute("userid", user.getId());
 			session.setAttribute("displayname", user.getDisplayName());
 			session.setAttribute("email", user.getEmail());
 			session.setAttribute("role", user.getMcpsRole().getId());
 		} else {
 			success = "unsuccess";
 		}
+		
+		return "redirect:/";
+	}
+	
+	/**
+	 * Logout controller
+	 */
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session, HttpServletRequest request, final McpsAccount account, Model model) {
+		logger.info("Login user");
+		
+		// delete session
+		session.invalidate();
 		
 		return "redirect:/";
 	}

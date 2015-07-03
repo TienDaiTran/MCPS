@@ -46,6 +46,14 @@ public class ManageCampaignService {
 	}
 	
 	/**
+	 * Get campaigns by creator id
+	 * @return
+	 */
+	public List<McpsCampaign> getCampaignsByCreator(Long creatorID) {
+		return campaignStorage.getCampaignByCreatorID(creatorID);
+	}
+	
+	/**
 	 * Get all category of campaigns in system
 	 * @return
 	 */
@@ -93,7 +101,7 @@ public class ManageCampaignService {
 	 * @param newCampaign
 	 */
 	public void createCampaign(String createrIDStr, String campaignName, String categoryIDStr, String prototypeQuantityStr,
-			String publishDateStr, String recuitDayStr, String trialDayStr, String bannerDes, String description) {
+			String publishDateStr, String recuitDayStr, String trialDayStr, String bannerDes, String shortDescription, String description) {
 		Long createrID = Long.parseLong(createrIDStr);
 		Short categoryID = Short.parseShort(categoryIDStr);
 		Long prototypeQuantity = Long.parseLong(prototypeQuantityStr);
@@ -111,6 +119,7 @@ public class ManageCampaignService {
 		creater.setId(createrID);
 		McpsCampaign newCampaign = new McpsCampaign(creater, campaignName, bannerDes, prototypeQuantity, recuitDay, trialDay, "new", new Date(), publishDate);
 		newCampaign.setDescription(description);
+		newCampaign.setShortDescription(shortDescription);
 		HashSet interestSet = new HashSet<McpsInterest>();
 		McpsInterest category = new McpsInterest();
 		category.setId(categoryID);
@@ -124,7 +133,7 @@ public class ManageCampaignService {
 	 * @param newCampaign
 	 */
 	public void updateCampaign(String idStr, String createrIDStr, String campaignName, String categoryIDStr, String prototypeQuantityStr,
-			String publishDateStr, String recuitDayStr, String trialDayStr, String bannerDes, String description) {
+			String publishDateStr, String recuitDayStr, String trialDayStr, String bannerDes, String shortDescription, String description) {
 		Long id = Long.parseLong(idStr);
 		Long createrID = Long.parseLong(createrIDStr);
 		Short categoryID = Short.parseShort(categoryIDStr);
@@ -146,6 +155,7 @@ public class ManageCampaignService {
 		McpsCampaign updateCampaign = new McpsCampaign(creater, campaignName, bannerDes, prototypeQuantity, recuitDay, trialDay, "new", createdDate, publishDate);
 		updateCampaign.setId(id);
 		updateCampaign.setDescription(description);
+		updateCampaign.setShortDescription(shortDescription);
 		HashSet interestSet = new HashSet<McpsInterest>();
 		McpsInterest category = new McpsInterest();
 		category.setId(categoryID);
@@ -163,37 +173,17 @@ public class ManageCampaignService {
 	}
 	
 	/**
-	 * Update account info
-	 * @param newInfo
-	 * @return true or fasle
+	 * Publish or unpublish a campaign
+	 * @param campaignID
+	 * @param isPublish true or false
 	 */
-//	public boolean updateAccountInfo(McpsAccount newInfo) {
-//		McpsAccount oldInfo = getAccount(newInfo.getId());
-//		boolean completed = false;
-//		if (oldInfo != null) {
-//			// update password
-//			if (!"".equals(newInfo.getPass())) {
-//				oldInfo.setPass(newInfo.getPass());
-//			}
-//			// update partner info
-//			if (newInfo.getMcpsPartneraccount()!=null) {
-//				newInfo.getMcpsPartneraccount().setId(oldInfo.getId());
-//				newInfo.getMcpsPartneraccount().setMcpsAccount(oldInfo);
-//				oldInfo.setMcpsPartneraccount(newInfo.getMcpsPartneraccount());
-//			}
-//			
-//			// update reviewer info
-//			if (newInfo.getMcpsRevieweraccount()!=null) {
-//				newInfo.getMcpsRevieweraccount().setId(oldInfo.getId());
-//				newInfo.getMcpsRevieweraccount().setMcpsAccount(oldInfo);
-//				oldInfo.setMcpsRevieweraccount(newInfo.getMcpsRevieweraccount());
-//			}
-//			// update info
-//			getAccountStorage().updateAccount(oldInfo);
-//			completed = true;
-//		}
-//		return completed;
-//	}
+	public void publish(Long campaignID, boolean isPublish) {
+		if (isPublish) {
+			campaignStorage.publish(campaignID, true);
+		} else {
+			campaignStorage.publish(campaignID, false);
+		}
+	}
 	
 	public boolean checkCampaignInfoForEditing(String id, String createrId,
 			String campaignName, String categoryID, String prototypeQuantity,

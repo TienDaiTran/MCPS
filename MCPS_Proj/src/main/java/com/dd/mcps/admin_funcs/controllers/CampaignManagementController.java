@@ -108,6 +108,7 @@ public class CampaignManagementController {
 												@RequestParam(value="recuitDay") String recuitDay,
 												@RequestParam(value="trialDay") String trialDay,
 												@RequestParam(value="banner") MultipartFile bannerFile,
+												@RequestParam(value="shortDescription") String shortDescription,
 												@RequestParam(value="description") String description,
 												HttpServletRequest request) {
 		
@@ -130,7 +131,8 @@ public class CampaignManagementController {
 			boolean saveImgFlag = Util.saveImage(bannerFile, bannerDestinationFolder, bannerFileName);
 			if (saveImgFlag) {
 				//Save the id you have used to create the file name in the DB. You can retrieve the image in future with the ID.
-				manageCampaignService.createCampaign("1", campaignName, categoryID, prototypeQuantity, publishDate, recuitDay, trialDay, bannerDestination, description);
+				manageCampaignService.createCampaign("1", campaignName, categoryID, prototypeQuantity, 
+						publishDate, recuitDay, trialDay, bannerDestination, shortDescription, description);
 				success = "success";
 			}
 		}
@@ -168,6 +170,7 @@ public class CampaignManagementController {
 			@RequestParam(value="recuitDay") String recuitDay,
 			@RequestParam(value="trialDay") String trialDay,
 			@RequestParam(value="banner") MultipartFile bannerFile,
+			@RequestParam(value="shortDescription") String shortDescription,
 			@RequestParam(value="description") String description,
 			HttpServletRequest request) {
 		
@@ -191,7 +194,8 @@ public class CampaignManagementController {
 				bannerDestination = oldCampaign.getBannerImage();
 				//update campaign 
 				manageCampaignService.updateCampaign(idStr, "1", campaignName, 
-						categoryID, prototypeQuantity, publishDate, recuitDay, trialDay, bannerDestination, description);
+						categoryID, prototypeQuantity, publishDate, recuitDay, 
+						trialDay, bannerDestination, shortDescription, description);
 				success = "success";
 			} else {
 				String bannerDestinationFolder = request.getSession().getServletContext().getRealPath("/resources/img/campaign/");
@@ -201,7 +205,8 @@ public class CampaignManagementController {
 				if (saveImgFlag) {
 					//update campaign 
 					manageCampaignService.updateCampaign(idStr, "1", campaignName, 
-							categoryID, prototypeQuantity, publishDate, recuitDay, trialDay, bannerDestination, description);
+							categoryID, prototypeQuantity, publishDate, recuitDay, 
+							trialDay, bannerDestination, shortDescription, description);
 					success = "success";
 				}
 			}
@@ -213,7 +218,7 @@ public class CampaignManagementController {
 	
 	@RequestMapping(value = "/admin/campaign/delete", method = RequestMethod.POST, 
 			params = {"id"})
-	public @ResponseBody String editAccount(@RequestParam(value="id") String idStr, Model model) {
+	public @ResponseBody String deleteAccount(@RequestParam(value="id") String idStr, Model model) {
 		
 		String success = "unsuccess";
 		try {

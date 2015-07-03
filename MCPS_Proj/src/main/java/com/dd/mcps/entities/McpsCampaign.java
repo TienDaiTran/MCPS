@@ -1,6 +1,6 @@
 package com.dd.mcps.entities;
 
-// Generated Jul 1, 2015 2:40:35 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 3, 2015 7:49:41 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -32,6 +32,7 @@ public class McpsCampaign implements java.io.Serializable {
 	private String campaignName;
 	private String bannerImage;
 	private String video;
+	private String shortDescription;
 	private String description;
 	private long prototypeQuantity;
 	private short recuitReviewerTime;
@@ -62,15 +63,17 @@ public class McpsCampaign implements java.io.Serializable {
 	}
 
 	public McpsCampaign(McpsAccount mcpsAccount, String campaignName,
-			String bannerImage, String video, String description,
-			long prototypeQuantity, short recuitReviewerTime, short reviewTime,
-			String state, Date initiateDate, Date publishDate,
+			String bannerImage, String video, String shortDescription,
+			String description, long prototypeQuantity,
+			short recuitReviewerTime, short reviewTime, String state,
+			Date initiateDate, Date publishDate,
 			Set<McpsCampaignAccount> mcpsCampaignAccounts,
 			Set<McpsInterest> mcpsInterests) {
 		this.mcpsAccount = mcpsAccount;
 		this.campaignName = campaignName;
 		this.bannerImage = bannerImage;
 		this.video = video;
+		this.shortDescription = shortDescription;
 		this.description = description;
 		this.prototypeQuantity = prototypeQuantity;
 		this.recuitReviewerTime = recuitReviewerTime;
@@ -128,6 +131,15 @@ public class McpsCampaign implements java.io.Serializable {
 
 	public void setVideo(String video) {
 		this.video = video;
+	}
+
+	@Column(name = "ShortDescription", length = 500)
+	public String getShortDescription() {
+		return this.shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
 	}
 
 	@Column(name = "Description", length = 5000)
